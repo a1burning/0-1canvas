@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>01-03认识canvas对象的属性方法</title>
+    <!-- 如果要兼容IE7\IE8，explorercanvas 这个扩展来解决，下载地址：https://github.com/arv/explorercanvas -->
+    <!-- 只需要向下面一样引用即可，但是依旧会有一些方法不能用，例如：fillText() -->
+    <!--[if IE]>
+        <script src="excanvas.js"></script>
+    <![end if]-->
+</head>
+<body>
+    <canvas id="canvas" width="200" height="160" style="border: 1px dashed gray;"></canvas>
+    <div>
+        <h3>canvas元素的属性:</h3>
+        <p>- width: <span id="width"></span></p>
+        <p>- height: <span id="height"></span></p>
+        <h3>canvas元素的方法:</h3>
+        <p>- getContext("2d"): 获取canvas2D上下文环境对象</p>
+        <p>- toDataURL(): 获取canvas对象产生的位图的字符串</p>
+        <p id="dataURL" style="width: 400px;color:#999;overflow: hidden;text-overflow: ellipsis;"></p>
+    </div>
+    
+    <script type="text/javascript">
+        window.onload = function() {
+            const cnv = document.getElementById('canvas');
+            const width = document.getElementById('width');
+            width.innerText = cnv.width;
+            const height = document.getElementById('height');
+            height.innerText = cnv.height;
+            const data = document.getElementById('dataURL');
+            data.innerText = cnv.toDataURL();
+        }
+    </script>
+</body>
+</html>

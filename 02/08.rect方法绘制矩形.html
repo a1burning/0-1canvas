@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>02-08rect方法绘制矩形</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" height="250" style="border: 1px dashed gray;"></canvas>
+    <div>
+        <h3>一、rect方法绘制矩形：</h3>
+        <p>cxt.rect(x, y, width, height)</p>
+        <p class="tips">x、y是左上角的顶点坐标，width、height是矩形的宽高</p>
+        <h3>二、rect方法和strokeRect、fillRect方法的区别：</h3>
+        <ul>
+            <li>rect方法，绘制完成之后不会立马绘制，需要用stroke或者fill才行</li>
+            <li>strokeRect、fillRect方法会立马绘制矩形</li>
+        </ul>
+        <h3>三、rect绘制描边矩形代码：</h3>
+        <p>cxt.strokeStyle = 'red'</p>
+        <p>cxt.rect(50, 50, 200, 150)</p>
+        <p>cxt.stroke()</p>
+        <p>cxt.fillStyle = '#ffe8e8'</p>
+        <p>cxt.rect(50, 50, 200, 150)</p>
+        <p>cxt.fill()</p>
+    </div>
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+        window.onload = function() {
+            const cnv = $$('canvas');
+            const cxt = cnv.getContext('2d');
+
+            cxt.strokeStyle = 'red';
+            cxt.rect(50, 50, 200, 150);
+            cxt.stroke();
+            cxt.fillStyle = '#ffe8e8';
+            cxt.rect(50, 50, 200, 150);
+            cxt.fill();
+        }
+    </script>
+</body>
+</html>

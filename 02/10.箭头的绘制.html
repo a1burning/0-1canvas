@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>02-10箭头的绘制</title>
+</head>
+<body>
+    <canvas id="canvas" width="200" style="border: 1px dashed gray;"></canvas>
+    <div>
+        <h3>绘制代码：</h3>
+        <p>cxt.moveTo(40, 60)</p>
+        <p>cxt.lineTo(100, 60)</p>
+        <p>cxt.lineTo(100, 30)</p>
+        <p>cxt.lineTo(150, 75)</p>
+        <p>cxt.lineTo(100, 120)</p>
+        <p>cxt.lineTo(100, 90)</p>
+        <p>cxt.lineTo(40, 90)</p>
+        <p>cxt.lineTo(40, 60)</p>
+    </div>
+    
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+        window.onload = function() {
+            const cnv = $$('canvas');
+            const cxt = cnv.getContext('2d');
+
+            cxt.moveTo(40, 60);
+            cxt.lineTo(100, 60);
+            cxt.lineTo(100, 30);
+            cxt.lineTo(150, 75);
+            cxt.lineTo(100, 120);
+            cxt.lineTo(100, 90);
+            cxt.lineTo(40, 90);
+            cxt.lineTo(40, 60);
+            cxt.stroke();
+        }
+    </script>
+</body>
+</html>

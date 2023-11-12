@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>02-09清空矩形</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" height="250" style="border: 1px dashed gray;"></canvas>
+    <div>
+        <button id="rect">绘制矩形</button>
+        <button id="btn">清空矩形</button>
+        <button id="btn1">清空画布</button>
+    </div>
+    <div>
+        <h3>一、语法：</h3>
+        <p>cxt.clearRect(x, y, width, height)</p>
+        <p class="tips">x、y是左上角的顶点坐标，width、height是矩形的宽高</p>
+        <h3>二、清空矩形</h3>
+        <p>cxt.clearRect(100, 100, 50, 50)</p>
+        <h3>二、清空画布</h3>
+        <p class="tips">如果覆盖整个画布，可以做到清空画布的作用</p>
+        <p>cxt.clearRect(0, 0, cnv.width, cnv.height)</p>
+    </div>
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+        window.onload = function() {
+            const cnv = $$('canvas');
+            const cxt = cnv.getContext('2d');
+
+            function paintRect() {
+                cxt.fillStyle = 'hotpink';
+                cxt.rect(50, 50, 200, 150);
+                cxt.fill();
+            }
+
+            paintRect()
+            // 绘制矩形
+            const rect = $$('rect')
+            rect.onclick = function() {
+                console.log('111');
+                paintRect();
+            }
+
+            // 清空矩形
+            const btn = $$('btn')
+            btn.onclick = function() {
+                cxt.clearRect(100, 100, 50, 50)
+            }
+            // 清空画布
+            const btn1 = $$('btn1')
+            btn1.onclick = function() {
+                cxt.clearRect(0, 0, cnv.width, cnv.height)
+            }
+        }
+    </script>
+</body>
+</html>

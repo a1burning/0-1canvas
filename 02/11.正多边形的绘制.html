@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>02-11正多边形的绘制</title>
+</head>
+<body>
+    <canvas id="canvas0" width="200" style="border: 1px dashed gray;"></canvas>
+    <canvas id="canvas1" width="200" style="border: 1px dashed gray;"></canvas>
+    <canvas id="canvas2" width="200" style="border: 1px dashed gray;"></canvas>
+    <canvas id="canvas3" width="200" style="border: 1px dashed gray;"></canvas>
+    <div>
+        <h3>绘制代码：</h3>
+        <p>封装代码：createPolygon(cxt, n, dx, dy, size)</p>
+        <p>cxt是绘制上下文，n是边数，dx和dy是中心点坐标，size是外接圆的半径大小</p>
+    </div>
+    
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+        function createPolygon(cxt, n, dx, dy, size) {
+            cxt.beginPath()
+            const degree = (2 * Math.PI) / n;
+            for(let i = 0; i < n; i++) {
+                const x = Math.cos(i * degree);
+                const y = Math.sin(i * degree);
+                cxt.lineTo(x * size + dx, y * size + dy);
+            }
+            cxt.closePath()
+        }
+        window.onload = function() {
+            for (let i = 0; i < 4; i++) {
+                const cnv = $$('canvas'+ i);
+                const cxt = cnv.getContext('2d');
+
+                createPolygon(cxt, 3 + i, 100, 75, 50);
+                cxt.fillStyle = 'hotpink';
+                cxt.fill();
+            }
+        }
+    </script>
+</body>
+</html>

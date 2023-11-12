@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>02-02多条直线的绘制</title>
+</head>
+<body>
+    <canvas id="canvas" width="200" style="border: 1px dashed gray;"></canvas>
+    <div>
+        <p>moveTo(50, 50)</p>
+        <p>lineTo(50, 100)</p>
+        <p>moveTo(100, 50)</p>
+        <p>lineTo(100, 100)</p>
+    </div>
+
+    <canvas id="canvas1" width="200" style="border: 1px dashed gray;"></canvas>
+    <div>
+        <p>moveTo(50, 50)</p>
+        <p>lineTo(50, 100)</p>
+        <p>lineTo(100, 50)</p>
+        <p>lineTo(100, 100)</p>
+    </div>
+    
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+        window.onload = function() {
+            const cnv = $$('canvas');
+            const cxt = cnv.getContext('2d');
+
+            cxt.moveTo(50, 50);
+            cxt.lineTo(50, 100);
+            cxt.moveTo(100, 50);
+            cxt.lineTo(100, 100);
+            cxt.stroke();
+
+            const cnv1 = $$('canvas1');
+            const cxt1 = cnv1.getContext('2d');
+
+            cxt1.moveTo(50, 50);
+            cxt1.lineTo(50, 100);
+            cxt1.lineTo(100, 50);
+            cxt1.lineTo(100, 100);
+            cxt1.stroke();
+        }
+    </script>
+</body>
+</html>

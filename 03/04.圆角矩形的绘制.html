@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>03-04圆角矩形的绘制</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="200" style="border: 1px dashed gray;"></canvas>
+    
+    <div>
+        <h3>绘制圆角矩形</h3>
+        <p class="tips">可以用arcTo方法也可以用arc方法，下面是封装的圆角矩形的方法</p>
+        <p>createRoundedRect(cxt, width, height, r, offsetX, offsetY)</p>
+        <ul>
+            <li>cxt：绘制上下文</li>
+            <li>width：圆角矩形的宽度</li>
+            <li>height：圆角矩形的高度</li>
+            <li>r：圆角半径</li>
+            <li>offsetX offsetY：左上角顶点的横纵坐标</li>
+        </ul>
+        
+        <h3>重点几个坐标</h3>
+        <p>起始的坐标点：(offsetX + r, offsetY)</p>
+        <p>四条直线连线的终点位置</p>
+        <ul>
+            <li>(offsetX + width - r, offsetY)</li>
+            <li>(offsetX + width, offsetY + height - r)</li>
+            <li>(offsetX + r, offsetY + height)</li>
+            <li>(offsetX, offsetY + r)</li>
+        </ul>
+        <p>四条圆弧的终点位置</p>
+        <ul>
+            <li>(offsetY + width, offsetY + r)</li>
+            <li>(offsetX + width - r, offsetY + height)</li>
+            <li>(offsetX, offsetY + height - r)</li>
+            <li>(offsetX + r, offsetY)</li>
+        </ul>
+    </div>
+    
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+
+        function createRoundedRect(cxt, width, height, r, offsetX, offsetY) {
+            cxt.beginPath()
+            cxt.moveTo(offsetX + r, offsetY)
+            cxt.lineTo(offsetX + width - r, offsetY)
+            cxt.arcTo(offsetX + width, offsetY, offsetY + width, offsetY + r, r)
+            cxt.lineTo(offsetX + width, offsetY + height - r)
+            cxt.arcTo(offsetX + width, offsetY + height, offsetX + width - r, offsetY + height, r)
+            cxt.lineTo(offsetX + r, offsetY + height)
+            cxt.arcTo(offsetX, offsetY + height, offsetX, offsetY + height - r, r)
+            cxt.lineTo(offsetX, offsetY + r)
+            cxt.arcTo(offsetX, offsetY, offsetX + r, offsetY, r)
+            cxt.closePath()
+        }
+
+        window.onload = function() {
+            const cnv = $$('canvas');
+            const cxt = cnv.getContext('2d');
+            // 绘制圆角矩形
+            createRoundedRect(cxt, 100, 100, 20, 20, 20)
+            cxt.fillStyle = 'hotPink'
+            cxt.fill()
+        }
+    </script>
+</body>
+</html>

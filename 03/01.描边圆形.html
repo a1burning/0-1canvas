@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>03-01描边圆形</title>
+</head>
+<body>
+    <canvas id="canvas" width="255" style="border: 1px dashed gray;"></canvas>
+    <div>
+        <h3>有方向的圆</h3>
+        <p>逆时针</p>
+        <canvas id="canvas1" width="255" style="border: 1px dashed gray;"></canvas>
+        <p>顺时针</p>
+        <canvas id="canvas2" width="255" style="border: 1px dashed gray;"></canvas>
+    </div>
+    <div>
+        <h3>曲线图形的分类：</h3>
+        <p>曲线图形一般分为弧线和曲线，弧线是圆形的一部分，每一个点都有相同的曲率，而曲线不一定。曲线包含弧线</p>
+        <h3>关于beginPath()和closePath()：</h3>
+        <p>这两个方法是配合使用的，beginPath是开始路径的意思，closePath是关闭路径的意思。</p>
+        <h3>画圆的语法：</h3>
+        <p>cxt.arc(x, y, 半径, 开始角度, 结束角度, 方向anticlockwise)</p>
+        <ul>
+            <li>x和y：圆心坐标</li>
+            <li>开始角度和结束角度：以弧度为单位，尽量这样写 <span style="color:red;">120(度数) * Math.PI / 180</span></li>
+            <li>anticlockwise：方向，默认是false，代表顺时针，设置为true则是逆时针绘画</li>
+        </ul>
+        <h3>描边圆的步骤：</h3>
+        <ol>
+            <li>开始路径</li>
+            <li>arc()画圆</li>
+            <li>结束路径</li>
+            <li>描边操作</li>
+        </ol>
+    </div>
+    
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+
+        window.onload = function() {
+            const cnv = $$('canvas');
+            const cxt = cnv.getContext('2d');
+            // 半圆
+            cxt.beginPath()
+            cxt.arc(80, 80, 50, 0, 180 * Math.PI / 180, true)
+            cxt.closePath()
+            cxt.strokeStyle = 'hotPink'
+            cxt.stroke()
+            // 整圆
+            cxt.beginPath()
+            cxt.arc(120, 80, 50, 0, 360 * Math.PI / 180, true)
+            cxt.closePath()
+            cxt.strokeStyle = 'hotPink'
+            cxt.stroke()
+
+            const cnv1 = $$('canvas1');
+            const cxt1 = cnv1.getContext('2d');
+            // 逆时针
+            cxt1.beginPath()
+            cxt1.arc(70, 70, 50, 0, -90 * Math.PI / 180, true)
+            cxt1.closePath()
+            cxt1.strokeStyle = 'hotPink'
+            cxt1.stroke()
+
+            const cnv2 = $$('canvas2');
+            const cxt2 = cnv2.getContext('2d');
+            // 顺时针
+            cxt2.beginPath()
+            cxt2.arc(70, 70, 50, 0, -90 * Math.PI / 180)
+            cxt2.closePath()
+            cxt2.strokeStyle = 'hotPink'
+            cxt2.stroke()
+        }
+    </script>
+</body>
+</html>

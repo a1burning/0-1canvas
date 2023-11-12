@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>02-05描边矩形</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="200" style="border: 1px dashed gray;"></canvas>
+    <div>
+        <h3>绘制描边矩形的步骤：</h3>
+        <p>1. 使用cxt.strokeStyle设置属性值（颜色值、渐变色、图案）</p>
+        <p>2. 使用cxt.strokeRect(x, y, width, height)绘制</p>
+        <p class="tips">属性必须要在方法前定义好，否则画布无法绘制出来</p>
+        <h3>绘制代码：</h3>
+        <p>cxt.strokeStyle = 'red'</p>
+        <p>cxt.strokeRect(50, 50, 100, 50)</p>
+    </div>
+    
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+        window.onload = function() {
+            const cnv = $$('canvas');
+            const cxt = cnv.getContext('2d');
+
+            cxt.strokeStyle = 'red';
+            cxt.strokeRect(50, 50, 100, 50)
+        }
+    </script>
+</body>
+</html>

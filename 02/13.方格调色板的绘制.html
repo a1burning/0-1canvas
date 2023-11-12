@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>02-13方格调色板的绘制</title>
+</head>
+<body>
+    <canvas id="canvas" width="200" style="border: 1px dashed gray;"></canvas>
+    <div>
+        <h3>绘制代码：</h3>
+        <p>封装代码：createColor(cxt, size, width, height)</p>
+        <p>cxt是绘制上下文，size是分的个数，width是整体的宽度，height是整体的长度</p>
+    </div>
+    
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+
+        function createColor(cxt, n, width, height) {
+            for(let i = 0; i < n; i++) {
+                for(let j = 0; j < n; j++) {
+                    const degree = (255 / n).toFixed(1);
+                    cxt.fillStyle = `rgba(${Math.floor(255 - degree * i)},${Math.floor(255 - degree * j)},0)`;
+                    const w = Math.floor(width / n);
+                    const h = Math.floor(height / n);
+                    cxt.fillRect(j * w, i * h, w, h);
+                }
+            }
+        }
+
+        window.onload = function() {
+            const cnv = $$('canvas');
+            const cxt = cnv.getContext('2d');
+
+            createColor(cxt, 6, cnv.width, cnv.height)
+        }
+    </script>
+</body>
+</html>

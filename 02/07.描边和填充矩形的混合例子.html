@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>02-07描边和填充矩形的混合例子</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" height="250" style="border: 1px dashed gray;"></canvas>
+    <div>
+        <h3>绘制代码：</h3>
+        <p>cxt.strokeStyle = 'red'</p>
+        <p>cxt.strokeRect(50, 50, 200, 150)</p>
+        <p>cxt.fillStyle = '#ffe8e8';</p>
+        <p>cxt.fillRect(50, 50, 200, 150)</p>
+    </div>
+
+    <canvas id="canvas1" height="250" style="border: 1px dashed gray;"></canvas>
+    <div>
+        <h3>绘制代码：</h3>
+        <p>cxt1.fillStyle = 'hotpink'</p>
+        <p>cxt1.fillRect(50, 50, 150, 100)</p>
+        <p>cxt1.fillStyle = 'rgba(0, 0, 255, 0.3)'</p>
+        <p>cxt1.fillRect(100, 100, 150, 100)</p>
+    </div>
+    
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+        window.onload = function() {
+            const cnv = $$('canvas');
+            const cxt = cnv.getContext('2d');
+
+            cxt.strokeStyle = 'red';
+            cxt.strokeRect(50, 50, 200, 150);
+            cxt.fillStyle = '#ffe8e8';
+            cxt.fillRect(50, 50, 200, 150);
+
+            const cnv1 = $$('canvas1');
+            const cxt1 = cnv1.getContext('2d');
+
+            cxt1.fillStyle = 'hotpink';
+            cxt1.fillRect(50, 50, 150, 100);
+            cxt1.fillStyle = 'rgba(0, 0, 255, 0.3)';
+            cxt1.fillRect(100, 100, 150, 100);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>02-01一条直线的绘制</title>
+</head>
+<body>
+    <canvas id="canvas" width="200" style="border: 1px dashed gray;"></canvas>
+    <div>
+        <h3>canvas坐标系：</h3>
+        <p>- 数学坐标系：x正方向向右，y正方向向上</p>
+        <p>- W3C坐标系（canvas坐标系）：x正方向向右，y正方向向下</p>
+        <h3>画一条直线的步骤：</h3>
+        <p>1. moveTo(x,y) 移动到某一个起点</p>
+        <p>2. lineTo(x,y) 确定直线的终点</p>
+        <p>3. stroke() 画线</p>
+    </div>
+    
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+        window.onload = function() {
+            const cnv = $$('canvas');
+            const cxt = cnv.getContext('2d');
+
+            cxt.moveTo(50, 100);
+            cxt.lineTo(150, 50);
+            cxt.stroke();
+        }
+    </script>
+</body>
+</html>

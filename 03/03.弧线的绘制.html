@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>03-03弧线的绘制</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h2>arc()方法画弧线</h2>
+        <p class="tips">在使用arc方法画完弧线之后，不使用closePath关闭路径，即可获得不封闭的弧线</p>
+        <canvas id="canvas" width="200" style="border: 1px dashed gray;"></canvas>
+        <canvas id="canvas1" width="200" style="border: 1px dashed gray;"></canvas>
+    </div>
+    
+    <div>
+        <h2>arcTo()方法画弧线</h2>
+        <div style="display: flex; text-align: center;">
+            <div style="margin-right: 5px;">
+                <canvas id="canvas2" width="200" style="border: 1px dashed gray;"></canvas>
+                <p>起始点是切点</p>
+            </div>
+            <div>
+                <canvas id="canvas3" width="200" style="border: 1px dashed gray;"></canvas>
+                <p>起始点不是切点</p>
+            </div>
+        </div>
+    </div>
+    
+    <div>
+        <h3>画弧线的三个坐标点</h3>
+        <p>开始点：开始点所在边与圆的切点，一般由moveTo()或lineTo()提供</p>
+        <p class="tips">开始点并不一定是切点，如果不是切点，那么会在开始点和控制点绘制一条切线，与圆的切点则是真正的开始点</p>
+        <p>控制点：两个切线的交点，由arcTo()提供</p>
+        <p>结束点：结束点所在边与圆的切点，由arcTo()提供</p>
+        <h3>arcTo()方法画弧线</h3>
+        <p>cxt.arcTo(cx, cy, x2, y2, radius)</p>
+        <ul>
+            <li>cx, cy就是控制点坐标</li>
+            <li>x2, y2就是结束点坐标</li>
+        </ul>
+        <p class="tips">注意点：</p>
+        <p class="tips">利用开始点、控制点和结束点形成的夹角，绘制一段与夹角的两边相切并且半径是radius的圆弧</p>
+        <p class="tips">使用arcTo不需要和beginPath配合使用</p>
+    </div>
+    
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+
+        window.onload = function() {
+            // arc方法画弧线
+            const cnv = $$('canvas');
+            const cxt = cnv.getContext('2d');
+            // 开始路径
+            cxt.beginPath()
+            cxt.arc(80, 80, 50, 0, -90 * Math.PI / 180, true)
+            // 不加closePath就可以获得不封闭的弧线
+            cxt.strokeStyle = 'hotPink'
+            cxt.stroke()
+
+            const cnv1 = $$('canvas1');
+            const cxt1 = cnv1.getContext('2d');
+            // 直线
+            cxt1.moveTo(20, 20)
+            cxt1.lineTo(70, 20)
+            cxt1.strokeStyle = 'hotPink'
+            cxt1.stroke()
+            // 画弧线
+            cxt1.beginPath()
+            cxt1.arc(70, 70, 50, 0, -90 * Math.PI / 180, true)
+            cxt1.moveTo(120, 70)
+            cxt1.lineTo(120, 120)
+            cxt1.strokeStyle = 'hotPink'
+            cxt1.stroke()
+
+            // arcTo方法绘制弧线
+            const cnv2 = $$('canvas2');
+            const cxt2 = cnv2.getContext('2d');
+            cxt2.moveTo(20, 20)
+            cxt2.lineTo(70, 20)
+            cxt2.arcTo(120, 20, 120, 70, 50)
+            cxt2.lineTo(120, 120)
+            cxt2.strokeStyle = 'hotPink'
+            cxt2.stroke()
+
+            // arcTo方法绘制弧线
+            const cnv3 = $$('canvas3');
+            const cxt3 = cnv3.getContext('2d');
+            // 开始点不是切点
+            cxt3.moveTo(20, 20)
+            cxt3.arcTo(120, 20, 120, 70, 50)
+            cxt3.lineTo(120, 120)
+            cxt3.strokeStyle = 'hotPink'
+            cxt3.stroke()
+        }
+    </script>
+</body>
+</html>

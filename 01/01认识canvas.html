@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>01-01认识canvas</title>
+</head>
+<body>
+    <canvas id="canvas" width="200" height="150" style="border: 1px dashed gray;"></canvas>
+    <div>
+        <h3>绘制canvas有三个步骤</h3>
+        <p>1. 获取canvas对象</p>
+        <p>2. 获取上下文环境对象context</p>
+        <p>3. 开始绘制图形</p>
+    </div>
+    <script type="text/javascript">
+        window.onload = function() {
+            // 1. 获取canvas对象
+            const cnv = document.getElementById('canvas');
+            // 2. 获取上下文环境对象context
+            const cxt = cnv.getContext('2d');
+            // 3. 开始绘制图形
+            cxt.moveTo(50, 100);
+            cxt.lineTo(150, 50);
+            cxt.stroke();
+        }
+    </script>
+</body>
+</html>

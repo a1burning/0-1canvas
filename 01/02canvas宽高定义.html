@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>01-02canvas宽高定义</title>
+    <style>
+        #canvas {
+            width: 200px;
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" style="border: 1px dashed gray;"></canvas>
+    <div>
+        <h3>canvas元素简介：</h3>
+        <p>- canvas是一个行内块元素，有三个属性：id、width、height</p>
+        <p>- width：canvas元素的宽度，默认是300px</p>
+        <p>- height: canvas元素的高度，默认是150px</p>
+        <h4>特别注意：</h4>
+        <p>canvas的宽度和高度可以在html中定义，也可以在css中定义，但是css中定义的并不是画布原本的宽高</p>
+        <p>当前这个画布定义了css宽为200px，高为100px</p>
+        <p id="content"></p>
+    </div>
+    
+    <script type="text/javascript">
+        window.onload = function() {
+            const cnv = document.getElementById('canvas');
+            const str = `但实际canvas的宽度是:${ cnv.width }px，高度是:${ cnv.height }px`;
+            const pcontent = document.getElementById('content');
+            pcontent.innerText = str;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>02-12五角星的绘制</title>
+</head>
+<body>
+    <canvas id="canvas" width="200" style="border: 1px dashed gray;"></canvas>
+    <div>
+        <h3>绘制代码：</h3>
+        <p>封装代码：createStar(cxt, dx, dy, size)</p>
+        <p>cxt是绘制上下文，dx和dy是中心点坐标，size是外接圆的半径大小</p>
+    </div>
+    
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+        function createStar(cxt, dx, dy, size) {
+            cxt.beginPath()
+            for(let i = 0; i < 5; i++) {
+                const x = Math.cos((18 + i * 72) * Math.PI / 180);
+                const y = -Math.sin((18 + i * 72) * Math.PI / 180);
+                cxt.lineTo(x * size + dx, y * size + dy);
+                const x1 = Math.cos((54 + i * 72) * Math.PI / 180);
+                const y1 = -Math.sin((54 + i * 72) * Math.PI / 180);
+                cxt.lineTo(x1 * size / 2 + dx, y1 * size / 2 + dy);
+            }
+            cxt.closePath()
+        }
+        window.onload = function() {
+            const cnv = $$('canvas');
+            const cxt = cnv.getContext('2d');
+
+            createStar(cxt, 100, 75, 50);
+            cxt.fillStyle = 'hotpink';
+            cxt.fill();
+        }
+    </script>
+</body>
+</html>

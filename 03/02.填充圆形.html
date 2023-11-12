@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>03-02填充圆形</title>
+</head>
+<body>
+    <canvas id="canvas" width="255" style="border: 1px dashed gray;"></canvas>
+    <div>
+        <h3>有方向的圆</h3>
+        <p>逆时针</p>
+        <canvas id="canvas1" width="255" style="border: 1px dashed gray;"></canvas>
+        <p>顺时针</p>
+        <canvas id="canvas2" width="255" style="border: 1px dashed gray;"></canvas>
+    </div>
+    <div>
+        <h3>填充圆的步骤：</h3>
+        <ol>
+            <li>开始路径</li>
+            <li>arc()画圆</li>
+            <li>结束路径</li>
+            <li>填充操作</li>
+        </ol>
+    </div>
+    
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+
+        window.onload = function() {
+            const cnv = $$('canvas');
+            const cxt = cnv.getContext('2d');
+            // 半圆
+            cxt.beginPath()
+            cxt.arc(80, 80, 50, 0, 180 * Math.PI / 180, true)
+            cxt.closePath()
+            cxt.fillStyle = 'hotPink'
+            cxt.fill()
+            // 整圆
+            cxt.beginPath()
+            cxt.arc(120, 80, 50, 0, 360 * Math.PI / 180, true)
+            cxt.closePath()
+            cxt.fillStyle = '#9966ff'
+            cxt.fill()
+
+            const cnv1 = $$('canvas1');
+            const cxt1 = cnv1.getContext('2d');
+            // 逆时针
+            cxt1.beginPath()
+            cxt1.arc(70, 70, 50, 0, -90 * Math.PI / 180, true)
+            cxt1.closePath()
+            cxt1.fillStyle = 'hotPink'
+            cxt1.fill()
+
+            const cnv2 = $$('canvas2');
+            const cxt2 = cnv2.getContext('2d');
+            // 顺时针
+            cxt2.beginPath()
+            cxt2.arc(70, 70, 50, 0, -90 * Math.PI / 180)
+            cxt2.closePath()
+            cxt2.fillStyle = 'hotPink'
+            cxt2.fill()
+        }
+    </script>
+</body>
+</html>
