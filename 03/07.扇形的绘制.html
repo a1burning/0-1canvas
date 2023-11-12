@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>03-07扇形的绘制</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="200" style="border: 1px dashed gray;"></canvas>
+    <canvas id="canvas1" width="200" style="border: 1px dashed gray;"></canvas>
+    
+    <div>
+        <h3>绘制扇形</h3>
+        <p>beginPath、closePath、moveTo、arc四种方法配合可以绘制出扇形</p>
+        <h3>扇形绘制封装函数</h3>
+        <p>createSector(cxt, x, y, r, angle1, angle2)</p>
+        <ul>
+            <li>cxt：绘制上下文</li>
+            <li>x、y：中心位置的坐标</li>
+            <li>r：半径</li>
+            <li>angle1：开始角度</li>
+            <li>angle2：结束角度</li>
+        </ul>
+    </div>
+    
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+
+        function createSector(cxt, x, y, r, angle1, angle2) {
+            cxt.beginPath();
+            cxt.moveTo(x, y);
+            cxt.arc(x, y, r, angle1 * Math.PI / 180, angle2 * Math.PI / 180, false);
+            cxt.closePath();
+        }
+
+        window.onload = function() {
+            const cnv = $$('canvas');
+            const cxt = cnv.getContext('2d');
+            // 绘制扇形
+            cxt.beginPath();
+            cxt.moveTo(100, 75);
+            cxt.arc(cnv.width / 2, cnv.height / 2, 50, 30 * Math.PI / 180, 120 * Math.PI / 180, false);
+            cxt.closePath();
+            cxt.strokeStyle = 'hotpink';
+            cxt.stroke();
+
+            // 封装函数
+            const cnv1 = $$('canvas1');
+            const cxt1 = cnv1.getContext('2d');
+            createSector(cxt1, cnv1.width / 2, cnv1.height / 2, 50, 30, 120);
+            cxt1.fillStyle = 'hotpink';
+            cxt1.fill();
+        }
+    </script>
+</body>
+</html>

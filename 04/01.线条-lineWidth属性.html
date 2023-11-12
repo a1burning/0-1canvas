@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>04-01线条-lineWidth属性</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+        span {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="200" style="border: 1px dashed gray;"></canvas>
+    <canvas id="canvas1" width="200" style="border: 1px dashed gray;"></canvas>
+    
+    <div>
+        <h3>lineWidth属性</h3>
+        <p>用来定义线条的宽度，默认值是1，默认单位是px</p>
+        <p>context.lineWidth = 整数</p>
+        <p class="tips">注意：canvas是基于状态来绘制图形的，如果同一个路径中已经设定了状态，则会一直使用。除非用beginPath来开始新的路径。</p>
+    </div>
+
+    <canvas id="canvas2" width="200" style="border: 1px dashed gray;"></canvas>
+    <canvas id="canvas3" width="200" style="border: 1px dashed gray;"></canvas>
+    <div>
+        <h3>lineWidth属性可以用于直线、曲线、矩形等</h3>
+        <p>图上可以看出来，strokeRect方法绘制出来的宽度是<span>width+lineWidth</span>，高度是<span>height+lineWidth</span></p>
+        <p>arc方法绘制出来的圆形实际的半径是<span>radius+lineWidth</span></p>
+    </div>
+    
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+
+        window.onload = function() {
+            const cnv = $$('canvas');
+            const cxt = cnv.getContext('2d');
+            // lineWidth的值为5
+            cxt.lineWidth = 5;
+            cxt.moveTo(20, 20);
+            cxt.lineTo(180, 20);
+            cxt.stroke();
+
+            // lineWidth的值为10
+            cxt.beginPath();
+            cxt.lineWidth = 10;
+            cxt.moveTo(20, 70);
+            cxt.lineTo(180, 70);
+            cxt.stroke()
+
+            // lineWidth的值为15
+            cxt.beginPath();
+            cxt.lineWidth = 15;
+            cxt.moveTo(20, 120);
+            cxt.lineTo(180, 120);
+            cxt.stroke()
+
+            // 下面是没有beginPath的样子
+            const cnv1 = $$('canvas1');
+            const cxt1 = cnv1.getContext('2d');
+            // lineWidth的值为5
+            cxt1.lineWidth = 5;
+            cxt1.moveTo(20, 20);
+            cxt1.lineTo(180, 20);
+            cxt1.stroke();
+
+            // lineWidth的值为10
+            cxt1.lineWidth = 10;
+            cxt1.moveTo(20, 70);
+            cxt1.lineTo(180, 70);
+            cxt1.stroke()
+
+            // lineWidth的值为15
+            cxt1.lineWidth = 15;
+            cxt1.moveTo(20, 120);
+            cxt1.lineTo(180, 120);
+            cxt1.stroke()
+
+            // 画曲线
+            const cnv2 = $$('canvas2');
+            const cxt2 = cnv2.getContext('2d');
+
+            cxt2.lineWidth = 5;
+            cxt2.arc(70, 70, 50, 0, -90 * Math.PI / 180, false);
+            cxt2.stroke();
+
+            // 画矩形
+            const cnv3 = $$('canvas3');
+            const cxt3 = cnv3.getContext('2d');
+
+            cxt3.lineWidth = 5;
+            cxt3.strokeRect(50, 50, 100, 50);
+            cxt3.stroke();
+
+            cxt3.beginPath();
+            cxt3.lineWidth = 1;
+            cxt3.strokeStyle = '#fff';
+            cxt3.strokeRect(50, 50, 100, 50);
+            cxt3.stroke();
+        }
+    </script>
+</body>
+</html>

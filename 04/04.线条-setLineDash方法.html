@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>04-04线条-setLineDash方法</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+        span {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="200" style="border: 1px dashed gray;"></canvas>
+    <canvas id="canvas1" width="200" style="border: 1px dashed gray;"></canvas>
+    
+    <div>
+        <h3>setLineDash方法</h3>
+        <p>用来定义线条的虚实样式</p>
+        <p>context.setLineDash(array)</p>
+        <p class="tips">参数的数组组合，单数是实线，双数是空白，循环</p>
+        <p class="tips">chrome和firefox都支持，IE不支持</p>
+    </div>
+    
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+
+        window.onload = function() {
+            const cnv = $$('canvas');
+            const cxt = cnv.getContext('2d');
+
+            cxt.setLineDash([10, 5]);
+            cxt.moveTo(20, 20);
+            cxt.lineTo(180, 20);
+            cxt.stroke();
+
+            cxt.beginPath();
+            cxt.setLineDash([5, 5]);
+            cxt.moveTo(20, 40);
+            cxt.lineTo(180, 40);
+            cxt.stroke();
+
+            cxt.beginPath();
+            cxt.setLineDash([10, 5, 5, 5]);
+            cxt.moveTo(20, 60);
+            cxt.lineTo(180, 60);
+            cxt.stroke();
+
+            cxt.beginPath();
+            cxt.setLineDash([2, 2]);
+            cxt.moveTo(20, 80);
+            cxt.lineTo(180, 80);
+            cxt.stroke();
+
+
+            // 矩形
+            const cnv1 = $$('canvas1');
+            const cxt1 = cnv1.getContext('2d');
+
+            cxt1.strokeStyle = 'hotpink';
+            cxt1.setLineDash([10, 5]);
+            cxt1.strokeRect(50, 50, 80, 80);
+        }
+    </script>
+</body>
+</html>

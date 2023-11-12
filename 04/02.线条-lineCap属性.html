@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>04-02线条-lineCap属性</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+        span {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="200" style="border: 1px dashed gray;"></canvas>
+    
+    <div>
+        <h3>lineCap属性</h3>
+        <p>用来定义线条开始处和结尾处的键帽样式</p>
+        <p>context.lineCap = "属性值"</p>
+        <ul>
+            <li>butt: 默认值，无键帽</li>
+            <li>round: 圆形键帽</li>
+            <li>square: 方形键帽</li>
+        </ul>
+        <p class="tips">注意：round和square的属性，会让线条稍微长一点，长的部分是lineWidth的一半。</p>
+        <p class="tips">注意：必须要使用beginPath，才能修改lineCap的属性值。</p>
+    </div>
+
+    <div>
+        <h3>案例：绘制Z</h3>
+        <canvas id="canvas1" width="200" style="border: 1px dashed gray;"></canvas>
+        <p>可以看出lineCap属性只对线条的开始和结尾处起作用。</p>
+        <p>参考代码：</p>
+        <p>cxt.lineWidth = 12</p>
+        <p>cxt.lineCap = 'round'</p>
+    </div>
+    
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+
+        window.onload = function() {
+            const cnv = $$('canvas');
+            const cxt = cnv.getContext('2d');
+
+            cxt.lineWidth = 16;
+            // lineCap为默认值
+            cxt.moveTo(20, 20);
+            cxt.lineTo(180, 20);
+            cxt.stroke();
+
+            // lineCap为round
+            cxt.beginPath();
+            cxt.lineCap = 'round';
+            cxt.moveTo(20, 70);
+            cxt.lineTo(180, 70);
+            cxt.stroke()
+
+            // lineCap为square
+            cxt.beginPath();
+            cxt.lineCap = 'square';
+            cxt.moveTo(20, 120);
+            cxt.lineTo(180, 120);
+            cxt.stroke()
+
+            const cnv1 = $$('canvas1');
+            const cxt1 = cnv1.getContext('2d');
+            cxt1.moveTo(50, 50);
+            cxt1.lineTo(100, 50);
+            cxt1.lineTo(50, 100);
+            cxt1.lineTo(100, 100);
+            cxt1.lineWidth = 12;
+            cxt1.lineCap = 'round';
+            cxt1.stroke();
+
+        }
+    </script>
+</body>
+</html>

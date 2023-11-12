@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>03-05二次贝塞尔曲线的绘制</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="200" style="border: 1px dashed gray;"></canvas>
+    
+    <div>
+        <h3>介绍贝塞尔曲线</h3>
+        <p>应用于二维图形应用程序的数学曲线，canvas中常见的贝塞尔曲线有二次贝塞尔曲线和三次贝塞尔曲线。</p>
+        
+        <h3>二次贝塞尔曲线</h3>
+        <p>cxt.quadraticCurveTo(cx, cy, x2, y2)</p>
+        <p>绘制一条二次贝塞尔曲线，需要三个坐标点：起始点、控制点和终止点</p>
+        <p class="tips">起始点由moveTo和lineTo提供，控制点和终止点由quadraticCurveTo函数提供</p>
+    </div>
+
+    <div>
+        <h3>案例：使用贝塞尔曲线绘制气泡</h3>
+        <canvas id="canvas1" width="200" style="border: 1px dashed gray;"></canvas>
+    </div>
+    
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+
+        window.onload = function() {
+            const cnv = $$('canvas');
+            const cxt = cnv.getContext('2d');
+            // 绘制圆角矩形
+            cxt.moveTo(30, 120);
+            cxt.quadraticCurveTo(100, 20, 160, 120);
+            cxt.stroke();
+
+            const cnv1 = $$('canvas1');
+            const cxt1 = cnv1.getContext('2d');
+            cxt1.moveTo(75, 25);
+            cxt1.quadraticCurveTo(25, 25, 25, 62);
+            cxt1.quadraticCurveTo(25, 100, 50, 100);
+            cxt1.quadraticCurveTo(50, 120, 30, 125);
+            cxt1.quadraticCurveTo(60, 120, 65, 100);
+            cxt1.quadraticCurveTo(125, 100, 125, 62);
+            cxt1.quadraticCurveTo(125, 25, 75, 25);
+            cxt1.stroke();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>03-06三次贝塞尔曲线的绘制</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="200" style="border: 1px dashed gray;"></canvas>
+    
+    <div>
+        <h3>三次贝塞尔曲线</h3>
+        <p>cxt.bezierCurveTo(cx1, cy1, cx2, cy2, x, y)</p>
+        <p>绘制一条三次贝塞尔曲线，需要四个坐标点：起始点、控制点1、控制点2和终止点</p>
+        <p class="tips">起始点由moveTo和lineTo提供</p>
+    </div>
+
+    <div>
+        <h3>案例一：使用贝塞尔曲线绘制心形</h3>
+        <canvas id="canvas1" width="200" style="border: 1px dashed gray;"></canvas>
+        <h3>案例二：使用贝塞尔曲线绘制N叶草</h3>
+        <p>createLeaf(cxt, n, dx, dy, size, length)</p>
+        <ul>
+            <li>cxt：绘制上下文</li>
+            <li>n：草叶子的个数</li>
+            <li>dx、dy：花朵中心位置的坐标</li>
+            <li>size：控制花朵的大小</li>
+            <li>length：控制花瓣的长度</li>
+        </ul>
+        <canvas id="canvas2" width="200" style="border: 1px dashed gray;"></canvas>
+    </div>
+    
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+
+        function createLeaf(cxt, n, dx, dy, size, length) {
+            cxt.beginPath();
+            cxt.moveTo(dx, dy + size);
+            const degree = 2 * Math.PI / n;
+            for(let i = 0; i < n + 1; i++) {
+                // 计算开始坐标
+                const cx1 = Math.sin((i - 1) * degree) * length + dx;
+                const cy1 = Math.cos((i - 1) * degree) * length + dy;
+                const cx2 = Math.sin(i * degree) * length + dx;
+                const cy2 = Math.cos(i * degree) * length + dy;
+                // 计算结果坐标
+                const x = Math.sin(i * degree) * size + dx;
+                const y = Math.cos(i * degree) * size + dy;
+                cxt.bezierCurveTo(cx1, cy1, cx2, cy2, x, y);
+            }
+            cxt.closePath();
+        }
+
+        window.onload = function() {
+            const cnv = $$('canvas');
+            const cxt = cnv.getContext('2d');
+            // 绘制圆角矩形
+            cxt.moveTo(20, 80);
+            cxt.bezierCurveTo(20, 20, 120, 120, 120, 60);
+            cxt.stroke();
+
+            const cnv1 = $$('canvas1');
+            const cxt1 = cnv1.getContext('2d');
+            cxt1.moveTo(75, 40);
+            cxt1.bezierCurveTo(75, 37, 70, 25, 50, 25);
+            cxt1.bezierCurveTo(20, 25, 20, 62.5, 20, 62.5);
+            cxt1.bezierCurveTo(20, 80, 40, 102, 75, 120);
+            cxt1.bezierCurveTo(110, 102, 130, 80, 130, 62.5);
+            cxt1.bezierCurveTo(130, 62.5, 130, 25, 100, 25);
+            cxt1.bezierCurveTo(85, 25, 75, 37, 75, 40);
+            cxt1.stroke();
+
+            const cnv2 = $$('canvas2');
+            const cxt2 = cnv2.getContext('2d');
+            createLeaf(cxt2, 4, cnv2.width / 2, cnv2.height / 2, 20, 80)
+            cxt2.fillStyle = '#00ff99';
+            cxt2.fill()
+        }
+    </script>
+</body>
+</html>

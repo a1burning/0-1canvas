@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>04-03线条-lineJoin属性</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+        span {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="200" style="border: 1px dashed gray;"></canvas>
+    
+    <div>
+        <h3>lineJoin属性</h3>
+        <p>用来定义线条两个线条交接处的样式</p>
+        <p>context.lineJoin = "属性值"</p>
+        <ul>
+            <li>miter: 默认值，尖角（交界处延伸直至交于一点）</li>
+            <li>round: 圆角（圆角的直径等于lineWidth）</li>
+            <li>bevel: 斜角（斜角的正方形对角线长等于lineWidth）</li>
+        </ul>
+        <p class="tips">注意：当lineJoin取默认值时，会收到miterLimit属性的影响，但是这个属性开发中几乎用不到，不需要深入了解。</p>
+    </div>
+
+    <div>
+        <h3>案例：绘制Z</h3>
+        <canvas id="canvas1" width="200" style="border: 1px dashed gray;"></canvas>
+        <canvas id="canvas2" width="200" style="border: 1px dashed gray;"></canvas>
+        <canvas id="canvas3" width="200" style="border: 1px dashed gray;"></canvas>
+    </div>
+    
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+
+        window.onload = function() {
+            const cnv = $$('canvas');
+            const cxt = cnv.getContext('2d');
+
+            cxt.lineWidth = 16;
+            // lineJoin为默认值
+            cxt.moveTo(20, 20);
+            cxt.lineTo(180, 20);
+            cxt.lineTo(180, 35);
+            cxt.stroke();
+
+            // lineJoin为round
+            cxt.beginPath();
+            cxt.lineJoin = 'round';
+            cxt.moveTo(20, 70);
+            cxt.lineTo(180, 70);
+            cxt.lineTo(180, 85);
+            cxt.stroke()
+
+            // lineJoin为bevel
+            cxt.beginPath();
+            cxt.lineJoin = 'bevel';
+            cxt.moveTo(20, 120);
+            cxt.lineTo(180, 120);
+            cxt.lineTo(180, 135);
+            cxt.stroke()
+
+            // 案例z默认
+            const cnv1 = $$('canvas1');
+            const cxt1 = cnv1.getContext('2d');
+            cxt1.moveTo(50, 50);
+            cxt1.lineTo(100, 50);
+            cxt1.lineTo(50, 100);
+            cxt1.lineTo(100, 100);
+            cxt1.lineWidth = 12;
+            cxt1.stroke();
+
+            // 案例z-round
+            const cnv2 = $$('canvas2');
+            const cxt2 = cnv2.getContext('2d');
+            cxt2.moveTo(50, 50);
+            cxt2.lineTo(100, 50);
+            cxt2.lineTo(50, 100);
+            cxt2.lineTo(100, 100);
+            cxt2.lineWidth = 12;
+            cxt2.lineJoin = 'round';
+            cxt2.stroke();
+
+            // 案例z-bevel
+            const cnv3 = $$('canvas3');
+            const cxt3 = cnv3.getContext('2d');
+            cxt3.moveTo(50, 50);
+            cxt3.lineTo(100, 50);
+            cxt3.lineTo(50, 100);
+            cxt3.lineTo(100, 100);
+            cxt3.lineWidth = 12;
+            cxt3.lineJoin = 'bevel';
+            cxt3.stroke();
+        }
+    </script>
+</body>
+</html>
