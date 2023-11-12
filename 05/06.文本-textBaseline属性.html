@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>05-06文本-textBaseline属性</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+        span {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="300" height="200" style="border: 1px dashed gray;"></canvas>
+
+    <div>
+        <h3>textBaseline属性</h3>
+        <p>用来定义文字垂直方向的对齐方式</p>
+        <p>cxt.textBaseline = "属性值"</p>
+        <ul>
+            <li>alphabetic: 英文字母基线对齐</li>
+            <li>top: 顶部对齐</li>
+            <li>middle: 居中对齐</li>
+            <li>bottom: 底部对齐</li>
+            <li>...其他属性值不重要</li>
+        </ul>
+    </div>
+
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+
+        window.onload = function() {
+            const cnv = $$('canvas');
+            const cxt = cnv.getContext('2d');
+            // 参考线
+            cxt.strokeStyle = 'purple';
+            cxt.moveTo(0, 100);
+            cxt.lineTo(300, 100);
+            cxt.stroke()
+
+            cxt.font = '20px Arial'
+            cxt.textBaseline = 'alphabetic';
+            cxt.fillText('alphabetic', 10, 100);
+            cxt.textBaseline = 'top';
+            cxt.fillText('top', 110, 100);
+            cxt.textBaseline = 'middle';
+            cxt.fillText('middle', 160, 100);
+            cxt.textBaseline = 'bottom';
+            cxt.fillText('bottom', 230, 100);
+        }
+    </script>
+</body>
+</html>

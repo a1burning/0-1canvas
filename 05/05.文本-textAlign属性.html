@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>05-05文本-textAlign属性</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+        span {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="300" height="200" style="border: 1px dashed gray;"></canvas>
+
+    <div>
+        <h3>textAlign属性</h3>
+        <p>用来定义文字水平方向的对齐方式</p>
+        <p>cxt.textAlign = "属性值"</p>
+        <ul>
+            <li>start: 指定的横坐标开始（与阅读方向有关）</li>
+            <li>end: 指定的横坐标结束（与阅读方向有关）</li>
+            <li>left: 文本左对齐</li>
+            <li>right: 文本右对齐</li>
+            <li>center: 文本居中对齐</li>
+        </ul>
+        <p class="tips">从左向右阅读的时候，start和left完全一致，end和right完全一致。</p>
+        <p class="tips">但是如果是从右向左阅读的时候，start和right对应，end和left对应。</p>
+    </div>
+
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+
+        window.onload = function() {
+            const cnv = $$('canvas');
+            const cxt = cnv.getContext('2d');
+            // 参考线
+            cxt.strokeStyle = 'purple';
+            cxt.moveTo(150, 0);
+            cxt.lineTo(150, 200);
+            cxt.stroke()
+
+            cxt.font = '15px Arial'
+            cxt.textAlign = 'start';
+            cxt.fillText('textAlign取值为start', 150, 30);
+            cxt.textAlign = 'end';
+            cxt.fillText('textAlign取值为end', 150, 60);
+            cxt.textAlign = 'left';
+            cxt.fillText('textAlign取值为left', 150, 90);
+            cxt.textAlign = 'right';
+            cxt.fillText('textAlign取值为right', 150, 120);
+            cxt.textAlign = 'center';
+            cxt.fillText('textAlign取值为center', 150, 150);
+        }
+    </script>
+</body>
+</html>

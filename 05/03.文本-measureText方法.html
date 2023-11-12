@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>05-03文本-measureText方法</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+        span {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="200" style="border: 1px dashed gray;"></canvas>
+    <p id="con"></p>
+
+    <div>
+        <h3>measureText方法</h3>
+        <p>不能用来绘制文本，只能用于获取文本的宽度</p>
+        <p>const length = cxt.measureText(text).width</p>
+        <p class="tips">注意：方法返回的是一个对象，里面只有一个width属性。是text文本的宽度，单位是px。</p>
+        <p class="tips">注意：这个属性对于实现<span>水平居中</span>的文本效果非常有用。</p>
+    </div>
+
+    <canvas id="canvas1" width="200" style="border: 1px dashed gray;"></canvas>
+
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+
+        window.onload = function() {
+            const cnv = $$('canvas');
+            const cxt = cnv.getContext('2d');
+            const text = 'canvas';
+            cxt.font = 'bold 30px 微软雅黑';
+            cxt.strokeStyle = 'purple';
+            cxt.strokeText(text, 30, 60);
+            const len = cxt.measureText(text).width;
+            const con = $$('con');
+            con.innerText = `当前文字宽度是 ${ len }px`
+
+            const cnv1 = $$('canvas1');
+            const cxt1 = cnv1.getContext('2d');
+            cxt1.font = 'bold 30px 微软雅黑'
+            const textWidth = cxt1.measureText(text).width;
+            const canvasWidth = cnv1.width;
+            const xPosition = canvasWidth / 2 - textWidth / 2;
+            cxt1.strokeStyle = 'purple';
+            cxt1.strokeText(text, xPosition, 60);
+        }
+    </script>
+</body>
+</html>

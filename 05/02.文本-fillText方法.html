@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>05-02文本-fillText方法</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+        span {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="200" style="border: 1px dashed gray;"></canvas>
+
+    <div>
+        <h3>fillText方法</h3>
+        <p>用来绘制填充文本，实心的。</p>
+        <p>fillText(text, x, y, maxWidth)</p>
+        <ul>
+            <li>text: 需要绘制的文本</li>
+            <li>x,y: 文本的左下角坐标</li>
+            <li>maxWidth: 可选，不写无限制，添加之后文本超出会进行压缩</li>
+        </ul>
+    </div>
+
+    <h3>添加了maxWidth=50的样式</h3>
+    <canvas id="canvas1" width="200" style="border: 1px dashed gray;"></canvas>
+    
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+
+        window.onload = function() {
+            const cnv = $$('canvas');
+            const cxt = cnv.getContext('2d');
+            const text = 'canvas';
+            cxt.font = 'bold 30px 微软雅黑'
+            cxt.fillStyle = 'purple';
+            cxt.fillText(text, 30, 60);
+            
+            const cnv1 = $$('canvas1');
+            const cxt1 = cnv1.getContext('2d');
+            cxt1.font = 'bold 30px 微软雅黑'
+            cxt1.fillStyle = 'purple';
+            cxt1.fillText(text, 30, 60, 50);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>05-04文本-font属性</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+        span {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="200" style="border: 1px dashed gray;"></canvas>
+
+    <div>
+        <h3>font属性</h3>
+        <p>用来定义文本的字体样式，与css的font属性用法一致</p>
+        <p>cxt.font = "font-style font-weight font-size/line-height font-family"</p>
+        <p class="tips">cxt.font的默认值是10px sans-serif。</p>
+        <ul>
+            <li>text: 需要绘制的文本</li>
+            <li>x,y: 文本的左下角坐标</li>
+            <li>maxWidth: 可选，不写无限制，添加之后文本超出会进行压缩</li>
+        </ul>
+    </div>
+    
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+
+        window.onload = function() {
+            const cnv = $$('canvas');
+            const cxt = cnv.getContext('2d');
+            const text = 'canvas';
+            cxt.font = 'bold 30px 微软雅黑'
+            cxt.fillStyle = 'purple';
+            cxt.fillText(text, 30, 60);
+        }
+    </script>
+</body>
+</html>
