@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>06-02图像-drawImage绘制存在的img标签图像</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+        span {
+            color: red;
+        }
+        .hide {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="300" height="300" style="border: 1px dashed gray;"></canvas>
+    <img id="pic" src="./33.jpg" class="hide" />
+
+    <div>
+        <h3>绘制已经存在的img标签图片的步骤</h3>
+        <ol>
+            <li>在页面中用img标签引入图片</li>
+            <li>将img标签的样式隐藏 display: none</li>
+            <li>在js中获取img标签，用drawImage进行绘制</li>
+        </ol>
+    </div>
+
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+
+        window.onload = function() {
+            const cnv = $$('canvas');
+            const cxt = cnv.getContext('2d');
+            
+            // 创建image对象
+            const pic = $$('pic')
+            cxt.drawImage(pic, 40, 20);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>06-06图像-平铺canvas元素</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+        span {
+            color: red;
+        }
+        .m-10 {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="200" style="border: 1px dashed gray;"></canvas>
+
+    <div>
+        <h3>createPattern方法</h3>
+        <p>用来定义图片的平铺方式，除了平铺图片，还可以平铺canvas元素、video元素等。</p>
+        <p class="tips">一般用于背景图片的平铺，这样可以用小图片减少性能的消耗。</p>
+        <h3>用法</h3>
+        <p>const pattern = cxt.createPattern(image, type)</p>
+        <p>cxt.fillStyle = pattern（图案模式）</p>
+        <p>cxt.fillRect</p>
+        <h3>type的类型</h3>
+        <ul>
+            <li>repeat: 默认值，在水平方向和垂直方向同时平铺（必须传）</li>
+            <li>repeat-x: 在水平方向平铺</li>
+            <li>repeat-y: 在垂直方向平铺</li>
+            <li>no-repeat: 只显示一次（不平铺）</li>
+        </ul>
+    </div>
+
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+
+        window.onload = function() {
+            const cnv = $$('canvas');
+            const cxt = cnv.getContext('2d');
+
+            // 创建canvas元素
+            const bgCanvas = document.createElement('canvas');
+            bgCanvas.width = 20;
+            bgCanvas.height = 20;
+            const bgCxt = bgCanvas.getContext('2d');
+            bgCxt.beginPath();
+            bgCxt.arc(10, 10, 10, 0, 360 * Math.PI / 180, true);
+            bgCxt.closePath();
+            bgCxt.fillStyle = 'hotpink';
+            bgCxt.fill();
+            
+            // 平铺所画的圆
+            const pattern = cxt.createPattern(bgCanvas, "repeat-x");
+            cxt.fillStyle = pattern
+            cxt.fillRect(0, 0, cnv.width, cnv.height)
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>06-01图像-drawImage动态绘制图像</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+        span {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="300" height="300" style="border: 1px dashed gray;"></canvas>
+
+    <div>
+        <h3>drawImage方法一</h3>
+        <p>用来绘制图片</p>
+        <p>cxt.drawImage(image, dx, dy)</p>
+        <ul>
+            <li>image: 页面中的图片，可以是img元素，也可以是js创建的Image对象</li>
+            <li>dx, dy: 左上角的坐标</li>
+        </ul>
+        <h3>动态绘制图片的步骤</h3>
+        <ol>
+            <li>先创建一个Image对象</li>
+            <li>将image的src进行赋值</li>
+            <li>在image的onload事件中，用drawImage进行绘制</li>
+        </ol>
+    </div>
+
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+
+        window.onload = function() {
+            const cnv = $$('canvas');
+            const cxt = cnv.getContext('2d');
+            
+            // 创建image对象
+            const image = new Image()
+            image.src = './33.jpg';
+            image.onload = function () {
+                cxt.drawImage(image, 40, 20);
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>06-09图像-图形中填充图片</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+        span {
+            color: red;
+        }
+        .m-10 {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="200" style="border: 1px dashed gray;"></canvas>
+
+    <div>
+        <h3>clip方法</h3>
+        <p>用来切割canvas中绘制的图片，还可以给canvas划分一个显示区域</p>
+        <p>cxt.clip()</p>
+        <h3>想要使用clip切割一张图片，需要3步：</h3>
+        <ol>
+            <li>绘制基本图形</li>
+            <li>使用clip方法</li>
+            <li>绘制图片</li>
+        </ol>
+    </div>
+
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+
+        window.onload = function() {
+            const cnv = $$('canvas');
+            const cxt = cnv.getContext('2d');
+
+            // 平铺所画的圆
+            const img = new Image()
+            img.src = './green.jpeg';
+            img.onload = function() {
+                cxt.beginPath();
+                cxt.arc(70, 70, 50, 0, 360 * Math.PI / 180, false);
+                cxt.closePath();
+                const pattern = cxt.createPattern(img, 'no-repeat');
+                cxt.fillStyle = pattern;
+                cxt.fill();
+            }
+        }
+    </script>
+</body>
+</html>

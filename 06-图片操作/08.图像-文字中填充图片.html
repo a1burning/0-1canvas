@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>06-08图像-文字中填充图片</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+        span {
+            color: red;
+        }
+        .m-10 {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="200" style="border: 1px dashed gray;"></canvas>
+
+    <div>
+        <h3>文字中填充图片步骤</h3>
+        <ol>
+            <li>加载图片</li>
+            <li>图片onload中定义文字</li>
+            <li>确定图案</li>
+            <li>确定文字填充样式</li>
+            <li>绘制填充文字</li>
+        </ol>
+    </div>
+
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+
+        window.onload = function() {
+            const cnv = $$('canvas');
+            const cxt = cnv.getContext('2d');
+
+            // 平铺所画的圆
+            const img = new Image()
+            img.src = './green.jpeg';
+            img.onload = function() {
+                const text = 'canvas';
+                cxt.font = 'bold 30px 微软雅黑';
+                const pattern = cxt.createPattern(img, 'no-repeat');
+                cxt.fillStyle = pattern;
+                cxt.fillText(text, 10, 50);
+            }
+        }
+    </script>
+</body>
+</html>

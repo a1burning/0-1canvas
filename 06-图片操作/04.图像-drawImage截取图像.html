@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>06-04图像-drawImage截取图像</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+        span {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="300" height="300" style="border: 1px dashed gray;"></canvas>
+
+    <div>
+        <h3>drawImage方法三</h3>
+        <p>用来截取图片（应用于CSS Sprite技术，用于canvas游戏开发）</p>
+        <p>cxt.drawImage(image, sx, sy, sw, sh, dx, dy, dw, dh)</p>
+        <ul>
+            <li>image: 页面中的图片，可以是img元素，也可以是js创建的Image对象</li>
+            <li>sx, sy: 被截取部分的坐标</li>
+            <li>sw, sh: 被截取部分的宽高</li>
+            <li>dx, dy: 绘制目标图片左上角的坐标</li>
+            <li>dw, dh: 绘制目标图片的宽度和高度</li>
+        </ul>
+    </div>
+
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+
+        window.onload = function() {
+            const cnv = $$('canvas');
+            const cxt = cnv.getContext('2d');
+            
+            // 创建image对象
+            const image = new Image()
+            image.src = './33.jpg';
+            image.onload = function () {
+                cxt.drawImage(image, 10, 10, 100, 100, 40, 20, 200, 200);
+            }
+        }
+    </script>
+</body>
+</html>

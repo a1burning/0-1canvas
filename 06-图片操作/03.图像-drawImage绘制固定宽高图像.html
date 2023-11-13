@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>06-03图像-drawImage绘制固定宽高图像</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+        span {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="300" height="300" style="border: 1px dashed gray;"></canvas>
+
+    <div>
+        <h3>drawImage方法二</h3>
+        <p>用来绘制大小不一样的图片（用于canvas游戏开发）</p>
+        <p>cxt.drawImage(image, dx, dy, dw, dh)</p>
+        <ul>
+            <li>image: 页面中的图片，可以是img元素，也可以是js创建的Image对象</li>
+            <li>dx, dy: 左上角的坐标</li>
+            <li>dw, dh: 定义图片的宽度和高度</li>
+        </ul>
+    </div>
+
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+
+        window.onload = function() {
+            const cnv = $$('canvas');
+            const cxt = cnv.getContext('2d');
+            
+            // 创建image对象
+            const image = new Image()
+            image.src = './33.jpg';
+            image.onload = function () {
+                cxt.drawImage(image, 40, 20, 100, 100);
+            }
+        }
+    </script>
+</body>
+</html>
