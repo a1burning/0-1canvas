@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>07-01图形平移</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+        span {
+            color: red;
+        }
+        .mr-10 {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div style="display: flex;text-align: center;">
+        <div class="mr-10">
+            <canvas id="canvas" width="200" style="border: 1px dashed gray;"></canvas>
+        </div>
+        <div class="mr-10">
+            <canvas id="canvas1" width="200" style="border: 1px dashed gray;"></canvas>
+            <div><button id="btn1">移动</button></div>
+            <p>没有清空画布的情况</p>
+        </div>
+        <div>
+            <canvas id="canvas2" width="200" style="border: 1px dashed gray;"></canvas>
+            <div><button id="btn2">移动</button></div>
+            <p>清空了画布的情况</p>
+        </div>
+    </div>
+
+    <div>
+        <h3>translate方法</h3>
+        <p>平移图形，沿着x轴或者y轴直线运动，平移不会改变图形的形状和大小</p>
+        <p>cxt.translate(x, y)</p>
+        <ul>
+            <li>x为正数时，向x轴正方向移动，负数向x轴负方向移动</li>
+            <li>y为正数时，向y轴正方向移动，负数向y轴负方向移动</li>
+        </ul>
+        <p class="tips">注意：变形操作必须在绘制之前调用才有效。</p>
+        <p class="tips">注意：每次绘制都会把会签的图形保留，如果不想留之前的痕迹，<span>需要使用清空操作清空画布</span></p>
+    </div>
+
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+
+        window.onload = function() {
+            const cnv = $$('canvas');
+            const cxt = cnv.getContext('2d');
+            // 绘制矩形
+            cxt.fillStyle = 'hotpink';
+            cxt.fillRect(30, 30, 50, 50);
+            // 移动矩形
+            cxt.translate(50, 50);
+            cxt.fillRect(30, 30, 50, 50); // 重绘这里和上面的矩形参数一样
+
+            const cnv1 = $$('canvas1');
+            const cxt1 = cnv1.getContext('2d');
+
+            cxt1.fillStyle = 'hotpink';
+            cxt1.fillRect(30, 30, 50, 50);
+            $$('btn1').onclick = function() {
+                cxt1.translate(10, 10);
+                cxt1.fillRect(30, 30, 50, 50);
+            }
+
+
+            const cnv2 = $$('canvas2');
+            const cxt2 = cnv2.getContext('2d');
+
+            cxt2.fillStyle = 'hotpink';
+            cxt2.fillRect(30, 30, 50, 50);
+            $$('btn2').onclick = function() {
+                cxt2.clearRect(0, 0, cnv2.width, cnv2.height);
+                cxt2.translate(10, 10);
+                cxt2.fillRect(30, 30, 50, 50);
+            }
+        }
+    </script>
+</body>
+</html>

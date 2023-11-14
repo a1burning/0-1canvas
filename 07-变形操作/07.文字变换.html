@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>07-07文字变换</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+        span {
+            color: red;
+        }
+        .mr-20 {
+            margin-right: 20px;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="200" style="border: 1px dashed gray;"></canvas>
+
+    <div>
+        <h3>文字变换步骤</h3>
+        <ol>
+            <li>定义文字</li>
+            <li>文字变换</li>
+            <li>绘制文字</li>
+        </ol>
+    </div>
+
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+
+        window.onload = function() {
+            const cnv = $$('canvas');
+            const cxt = cnv.getContext('2d');
+            
+            const text = 'canvas';
+            cxt.font = 'bold 30px Arial';
+            cxt.strokeStyle = 'hotpink';
+            cxt.strokeText(text, 10, 30);
+            cxt.translate(50, 50)
+            cxt.strokeText(text, 10, 30);
+        }
+    </script>
+</body>
+</html>

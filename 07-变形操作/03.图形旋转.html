@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>07-03图形旋转</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+        span {
+            color: red;
+        }
+        .mr-10 {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div style="display: flex; text-align: center;">
+        <div class="mr-10">
+            <canvas id="canvas" width="200" style="border: 1px dashed gray;"></canvas>
+            <div><button id="rotate">旋转</button></div>
+            <p>以原点为旋转中心</p>
+        </div>
+        <div class="mr-10">
+            <canvas id="canvas1" width="200" style="border: 1px dashed gray;"></canvas>
+            <p>以中心为旋转中心</p>
+        </div>
+    </div>
+
+    <div>
+        <h3>rotate方法</h3>
+        <p>旋转图形</p>
+        <p>cxt.rotate(angle)</p>
+        <ul>
+            <li>angle: 弧度，表示旋转的角度，正值是顺时针，负值是逆时针。建议传入 <span>120 * Math.PI / 180</span></li>
+        </ul>
+        <p class="tips">注意：默认是以原点为旋转中心，如果想改变旋转中心，可以用translate配合使用</p>
+    </div>
+
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+
+        window.onload = function() {
+            const cnv = $$('canvas');
+            const cxt = cnv.getContext('2d');
+            // 绘制矩形
+            cxt.fillStyle = 'hotpink';
+            cxt.fillRect(30, 30, 50, 50);
+
+            $$('rotate').onclick = function () {
+                cxt.rotate(-30 * Math.PI / 180);
+                cxt.fillStyle = 'LightSkyBlue';
+                cxt.fillRect(30, 30, 50, 50);
+            }
+
+            const cnv1 = $$('canvas1');
+            const cxt1 = cnv1.getContext('2d');
+
+            let i = 0
+            const rectWidth = 100;
+            const rectHeight = 50;
+            setInterval(function() {
+                i++;
+                cxt1.clearRect(0, 0, cnv1.width, cnv1.height);
+                cxt1.save();
+                cxt1.translate(cnv1.width / 2, cnv1.height / 2); // 将旋转中心转移到图形中心
+                cxt1.rotate((i / 100) * Math.PI); // 累进旋转
+                cxt1.fillStyle = 'LightSkyBlue';
+                cxt1.fillRect(-rectWidth / 2, -rectHeight / 2, rectWidth, rectHeight); // 填充矩形
+                cxt1.restore();
+            }, 10);
+        }
+    </script>
+</body>
+</html>

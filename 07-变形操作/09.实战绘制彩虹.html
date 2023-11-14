@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>07-09实战绘制彩虹</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+        span {
+            color: red;
+        }
+        .mr-20 {
+            margin-right: 20px;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="200" style="border: 1px dashed gray;"></canvas>
+
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+
+        window.onload = function() {
+            const cnv = $$('canvas');
+            const cxt = cnv.getContext('2d');
+
+            const colors = ['red', 'orange', 'yellow', 'green', 'blue', 'navy', 'purple'];
+            cxt.lineWidth = 12;
+            cxt.translate(50, 0);
+            
+            for(let i = 0; i < colors.length; i++) {
+                cxt.translate(0, 10)
+                cxt.strokeStyle = colors[i]
+                cxt.beginPath()
+                cxt.arc(50, 100, 100, 0, 180 * Math.PI / 180, true)
+                cxt.stroke()
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>07-08实战绘制螺旋图案</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+        span {
+            color: red;
+        }
+        .mr-20 {
+            margin-right: 20px;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="200" style="border: 1px dashed gray;"></canvas>
+
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+
+        window.onload = function() {
+            const cnv = $$('canvas');
+            const cxt = cnv.getContext('2d');
+            
+            cxt.translate(150, 0)
+            cxt.fillStyle = 'rgba(255, 0, 0, 0.25)'
+            for(let i = 0; i < 50; i++) {
+                cxt.translate(25, 25)
+                cxt.scale(0.95, 0.95)
+                cxt.rotate(Math.PI / 10)
+                cxt.fillRect(0, 0, 100, 50)
+            }
+        }
+    </script>
+</body>
+</html>

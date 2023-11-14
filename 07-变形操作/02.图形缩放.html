@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>07-02图形缩放</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+        span {
+            color: red;
+        }
+        .mr-10 {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div style="display: flex;text-align: center;">
+        <div class="mr-10">
+            <canvas id="canvas" width="200" style="border: 1px dashed gray;"></canvas>
+            <p>蓝色是放大1.5倍的样子，坐标也跟着移动了。</p>
+            <p>紫色是放回移动了(10, 10)的样子</p>
+        </div>
+        <div class="mr-10">
+            <canvas id="canvas1" width="200" style="border: 1px dashed gray;"></canvas>
+            <div><button id="big">放大</button><button id="small">缩小</button></div>
+            <p>放大和缩小都是基于前一次操作的。</p>
+        </div>
+    </div>
+
+    <div>
+        <h3>scale方法</h3>
+        <p>缩放图形，图形缩小和放大</p>
+        <p>cxt.scale(x, y)</p>
+        <ul>
+            <li>x和y在0-1时：图形被缩小</li>
+            <li>x和y在>1时：图形被放大</li>
+            <li>x和y可以取负数，但是一般不会用</li>
+        </ul>
+        <p class="tips">注意：放大和缩小都是基于前一次操作的。</p>
+        <p class="tips">注意：scale方法使用的时候，会有一些参数是跟着改变的，例如：<span>线宽、左上角坐标、宽高</span></p>
+    </div>
+
+    <div>
+        <canvas id="canvas2" width="200" style="border: 1px dashed gray;"></canvas>
+        <div><button id="btn">放大</button></div>
+    </div>
+
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+
+        window.onload = function() {
+            const cnv = $$('canvas');
+            const cxt = cnv.getContext('2d');
+            // 绘制矩形
+            cxt.fillStyle = 'hotpink';
+            cxt.fillRect(30, 30, 50, 50);
+            // 放大矩形
+            cxt.scale(1.5, 1.5);
+            cxt.fillStyle = '#87cefa75';
+            cxt.fillRect(30, 30, 50, 50); // 重绘这里和上面的矩形参数一样
+
+            // 返回
+            cxt.translate(-10, -10)
+            cxt.fillStyle = '#9854d499';
+            cxt.fillRect(30, 30, 50, 50); // 重绘这里和上面的矩形参数一样
+
+            const cnv1 = $$('canvas1');
+            const cxt1 = cnv1.getContext('2d');
+
+            cxt1.fillStyle = 'hotpink';
+            cxt1.fillRect(30, 30, 50, 50);
+            $$('big').onclick = function() {
+                cxt1.scale(1.5, 1.5);
+                cxt1.fillStyle = '#9966FF';
+                cxt1.fillRect(30, 30, 50, 50);
+            }
+
+            $$('small').onclick = function() {
+                cxt1.scale(0.5, 0.5);
+                cxt1.fillStyle = 'LightSkyBlue';
+                cxt1.fillRect(30, 30, 50, 50);
+            }
+
+
+            const cnv2 = $$('canvas2');
+            const cxt2 = cnv2.getContext('2d');
+
+            cxt2.lineWidth = 4;
+            cxt2.strokeStyle = 'hotpink';
+            cxt2.strokeRect(30, 30, 50, 50);
+            $$('btn').onclick = function() {
+                cxt2.scale(1.5, 1.5);
+                cxt2.strokeRect(30, 30, 50, 50);
+            }
+        }
+    </script>
+</body>
+</html>
