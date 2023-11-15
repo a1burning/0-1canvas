@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>08-08创建图像操作区域</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+        span {
+            color: red;
+        }
+        .mr-10 {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="200" height="200" style="border: 1px dashed gray;"></canvas>
+    <canvas id="canvas1" width="400" height="200" style="border: 1px dashed gray;"></canvas>
+
+    <div>
+        <h3>createImageData方法</h3>
+        <p>方法用于在画布中创建一个区域，可以对着这个区域进行像素操作。</p>
+        <p>cxt.createImageData(sw, sh)</p>
+        <ul>
+            <li>sw: 创建的图像区域的宽度</li>
+            <li>sh: 创建的图像区域的高度</li>
+        </ul>
+        <p>cxt.createImageData(imageData)</p>
+        <ul>
+            <li>imageData: 创建的图像区域，创建的区域和像素对象的宽高相等</li>
+        </ul>
+        <h3>区别</h3>
+        <p>一个是我们自己定义的宽高，另一个是复制其他作品的宽高。</p>
+        <p class="tips">注意：没有创建区域我们是没法进行像素操作的。所以要先用createImageData创建一个区域，才能进行像素操作。</p>
+    </div>
+
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+
+        window.onload = function() {
+            const cnv = $$('canvas');
+            const cxt = cnv.getContext('2d');
+            
+            const imgData = cxt.createImageData(100, 100);
+            const data = imgData.data;
+            for(let i = 0; i < 100 * 100 * 4; i += 4) {
+                data[i + 0] = 0;
+                data[i + 1] = 0;
+                data[i + 2] = 255;
+                data[i + 3] = 255;
+            }
+            cxt.putImageData(imgData, 10, 10);
+
+            const cnv1 = $$('canvas1');
+            const cxt1 = cnv1.getContext('2d');
+
+            const img = new Image();
+            img.src = './green.jpeg';
+            img.onload = function() {
+                cxt1.drawImage(img, 0, 0);
+                const imgData1 = cxt1.getImageData(0, 0, 200, 200);
+                const imgData2 = cxt1.createImageData(imgData1);
+                const data2 = imgData2.data;
+                for(let i = 0; i < imgData2.width * imgData2.height * 4; i += 4) {
+                    data2[i + 0] = 0;
+                    data2[i + 1] = 0;
+                    data2[i + 2] = 255;
+                    data2[i + 3] = 255;
+                }
+                cxt1.putImageData(imgData2, 200, 0);
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>08-06图像蒙版效果</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+        span {
+            color: red;
+        }
+        .mr-10 {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="850" height="220" style="border: 1px dashed gray;"></canvas>
+    <p>上面的图片，分别是红色蒙版、绿色蒙版和蓝色蒙版</p>
+
+    <div>
+        <h3>蒙版效果</h3>
+        <p>指的是将图片呈现偏红、偏绿、偏蓝的效果。</p>
+        <p>实现的算法是：<span>红色通道将红赋值为红、绿、蓝3个通道的平均值，绿、蓝通道为0，其他情况类似。</span></p>
+        <h3>语法</h3>
+        <p id="text"></p>
+    </div>
+
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+
+        window.onload = function() {
+            const cnv = $$('canvas');
+            const cxt = cnv.getContext('2d');
+            
+            const img = new Image();
+            img.src = './green.jpeg';
+            img.onload = function() {
+                // 全部绘制图片
+                cxt.drawImage(img, 10, 10);
+                const imgData = cxt.getImageData(10, 10, 200, 200);
+                const data = imgData.data;
+                for(let i = 0; i < data.length; i += 4) {
+                    const average = ( data[i + 0] + data[i + 1] + data[i + 2] ) / 3;
+                    data[i + 0] = average; // red
+                    data[i + 1] = 0; // green
+                    data[i + 2] = 0; // blue
+                }
+                cxt.putImageData(imgData, 220, 10);
+
+                cxt.drawImage(img, 10, 10);
+                const imgData1 = cxt.getImageData(10, 10, 200, 200);
+                const data1 = imgData1.data;
+                // 调整加权平均数
+                for(let i = 0; i < data1.length; i += 4) {
+                    const average = ( data1[i + 0] + data1[i + 1] + data1[i + 2] ) / 3;
+                    data1[i + 0] = 0; // red
+                    data1[i + 1] = average; // green
+                    data1[i + 2] = 0; // blue
+                }
+                cxt.putImageData(imgData1, 430, 10);
+
+                cxt.drawImage(img, 10, 10);
+                const imgData2 = cxt.getImageData(10, 10, 200, 200);
+                const data2 = imgData2.data;
+                // 调整加权平均数
+                for(let i = 0; i < data2.length; i += 4) {
+                    const average = ( data2[i + 0] + data2[i + 1] + data2[i + 2] ) / 3;
+                    data2[i + 0] = 0; // red
+                    data2[i + 1] = 0; // green
+                    data2[i + 2] = average; // blue
+                }
+                cxt.putImageData(imgData2, 640, 10);
+            }
+
+            const text = `for(let i = 0; i < data.length; i += 4) {
+                    const average = ( data[i + 0] + data[i + 1] + data[i + 2] ) / 3;
+                    data[i + 0] = average; // red
+                    data[i + 1] = 0; // green
+                    data[i + 2] = 0; // blue
+                }`
+            $$('text').innerText = text;
+        }
+    </script>
+</body>
+</html>

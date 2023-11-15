@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>08-05图像复古效果</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+        span {
+            color: red;
+        }
+        .mr-10 {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="430" height="220" style="border: 1px dashed gray;"></canvas>
+
+    <div>
+        <h3>复古效果</h3>
+        <p>指的是将图片有一种古旧的效果。</p>
+        <p>实现的算法是：<span>将红、绿、蓝3个通道的值的某种加权平均数</span></p>
+        <h3>语法</h3>
+        <p id="text"></p>
+        <p class="tips">虽然加权可以随便取，但是也有一定的大小规律。</p>
+    </div>
+
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+
+        window.onload = function() {
+            const cnv = $$('canvas');
+            const cxt = cnv.getContext('2d');
+            
+            const img = new Image();
+            img.src = './green.jpeg';
+            img.onload = function() {
+                // 全部绘制图片
+                cxt.drawImage(img, 10, 10);
+                const imgData = cxt.getImageData(10, 10, 200, 200);
+                const data = imgData.data;
+                for(let i = 0; i < data.length; i += 4) {
+                    const r = data[i + 0];
+                    const g = data[i + 1];
+                    const b = data[i + 2];
+                    data[i + 0] = r * 0.39 + g * 0.36 + b * 0.18; // red
+                    data[i + 1] = r * 0.35 + g * 0.68 + b * 0.16; // green
+                    data[i + 2] = r * 0.27 + g * 0.53 + b * 0.13; // blue
+                }
+                cxt.putImageData(imgData, 220, 10);
+            }
+
+            const text = `for(let i = 0; i < data.length; i += 4) {
+                    const r = data[i + 0];
+                    const g = data[i + 1];
+                    const b = data[i + 2];
+                    data[i + 0] = r * 0.39 + g * 0.36 + b * 0.18; // red
+                    data[i + 1] = r * 0.35 + g * 0.68 + b * 0.16; // green
+                    data[i + 2] = r * 0.27 + g * 0.53 + b * 0.13; // blue
+                }`
+            $$('text').innerText = text;
+        }
+    </script>
+</body>
+</html>

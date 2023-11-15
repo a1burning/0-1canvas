@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>08-02图像反转效果</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+        span {
+            color: red;
+        }
+        .mr-10 {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="430" height="220" style="border: 1px dashed gray;"></canvas>
+    <canvas id="canvas1" width="430" height="220" style="border: 1px dashed gray;"></canvas>
+
+    <div>
+        <h3>反转效果</h3>
+        <p>又称颜色反转，指的是图片颜色颠倒的效果。</p>
+        <p>实现的算法是：<span>将红、绿、蓝3个通道的像素取各自的相反值</span>，计算方式：<span>255 - 原值</span></p>
+        <h3>语法</h3>
+        <p id="text"></p>
+        <p class="tips">反转效果是不需要对透明度进行操作的，也就是说我们不需要处理data[i+3]。</p>
+        <p class="tips">可以获取所有图片信息，也可以只获取一部分图片信息。</p>
+    </div>
+
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+
+        window.onload = function() {
+            const cnv = $$('canvas');
+            const cxt = cnv.getContext('2d');
+
+            const cnv1 = $$('canvas1');
+            const cxt1 = cnv1.getContext('2d');
+            
+            const img = new Image();
+            img.src = './green.jpeg';
+            img.onload = function() {
+                // 全部绘制图片
+                cxt.drawImage(img, 10, 10);
+                const imgData = cxt.getImageData(10, 10, 200, 200);
+                const data = imgData.data;
+                for(let i = 0; i < data.length; i += 4) {
+                    data[i + 0] = 255 - data[i + 0]; // red
+                    data[i + 1] = 255 - data[i + 1]; // green
+                    data[i + 2] = 255 - data[i + 2]; // blue
+                }
+                cxt.putImageData(imgData, 220, 10);
+
+                // 只绘制一半图片
+                cxt1.drawImage(img, 10, 10);
+                const imgData1 = cxt1.getImageData(10, 10, 100, 200); // 这里只获取了一半的图片信息
+                const data1 = imgData1.data;
+                for(let i = 0; i < data1.length; i += 4) {
+                    data1[i + 0] = 255 - data1[i + 0]; // red
+                    data1[i + 1] = 255 - data1[i + 1]; // green
+                    data1[i + 2] = 255 - data1[i + 2]; // blue
+                }
+                cxt1.putImageData(imgData1, 220, 10);
+
+            }
+
+            const text = `for(let i = 0; i < data.length; i += 4) {
+                data[i + 0] = 255 - data[i + 0]; // red
+                data[i + 1] = 255 - data[i + 1]; // green
+                data[i + 2] = 255 - data[i + 2]; // blue
+            }`
+            $$('text').innerText = text;
+        }
+    </script>
+</body>
+</html>

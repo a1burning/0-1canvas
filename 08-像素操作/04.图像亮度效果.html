@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>08-04图像亮度效果</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+        span {
+            color: red;
+        }
+        .mr-10 {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="650" height="220" style="border: 1px dashed gray;"></canvas>
+    <p>上面的图片，中间是取平均值的，右边的是加权平均值的。</p>
+
+    <div>
+        <h3>亮度效果</h3>
+        <p>指的是将图片变得更亮或者更暗。</p>
+        <p>实现的算法是：<span>将红、绿、蓝3个通道的值，同时加一个正值或者一个负值</span></p>
+        <h3>语法</h3>
+        <p id="text"></p>
+        <p class="tips">正值变亮，负值变暗</p>
+    </div>
+
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+
+        window.onload = function() {
+            const cnv = $$('canvas');
+            const cxt = cnv.getContext('2d');
+            
+            const img = new Image();
+            img.src = './green.jpeg';
+            img.onload = function() {
+                // 全部绘制图片
+                cxt.drawImage(img, 10, 10);
+                const imgData = cxt.getImageData(10, 10, 200, 200);
+                const data = imgData.data;
+                for(let i = 0; i < data.length; i += 4) {
+                    const a = 50;
+                    data[i + 0] = data[i + 0] + a; // red
+                    data[i + 1] = data[i + 1] + a; // green
+                    data[i + 2] = data[i + 2] + a; // blue
+                }
+                cxt.putImageData(imgData, 220, 10);
+
+                cxt.drawImage(img, 10, 10);
+                const imgData1 = cxt.getImageData(10, 10, 200, 200);
+                const data1 = imgData1.data;
+                // 调整加权平均数
+                for(let i = 0; i < data1.length; i += 4) {
+                    const a = -50;
+                    data1[i + 0] = data1[i + 0] + a; // red
+                    data1[i + 1] = data1[i + 1] + a; // green
+                    data1[i + 2] = data1[i + 2] + a; // blue
+                }
+                cxt.putImageData(imgData1, 430, 10);
+
+            }
+
+            const text = `for(let i = 0; i < data.length; i += 4) {
+                    const a = 50;
+                    data[i + 0] = data[i + 0] + a; // red
+                    data[i + 1] = data[i + 1] + a; // green
+                    data[i + 2] = data[i + 2] + a; // blue
+                }`
+            $$('text').innerText = text;
+        }
+    </script>
+</body>
+</html>

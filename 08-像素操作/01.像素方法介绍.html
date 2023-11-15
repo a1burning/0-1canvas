@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>08-01像素方法介绍</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+        span {
+            color: red;
+        }
+        .mr-10 {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h3>getImageData()方法</h3>
+        <p>用来获取一张图片的像素数据</p>
+        <p>const imgData = cxt.getImageData(x, y, width, height)</p>
+        <ul>
+            <li>x, y: 表示所选图片区域左上角的横、纵坐标</li>
+            <li>width: 表示所选图片区域的宽度</li>
+            <li>height: 表示所选图片区域的高度</li>
+        </ul>
+        <p class="tips">注意：该方法返回的是一个canvasPixelArray对象，里面有一个data属性，是一个保存了一张图片像素数据的数组。</p>
+        <p class="tips">数组取值为<span>[r1, g1, b1, a1, r2, g2, b2, a2]</span>，分别是红、绿、蓝、透明度</p>
+        <p class="tips">注意：imgData.data.length 表示一张图片的像素总量</p>
+
+        <h3>putImageData()方法</h3>
+        <p>用像素数据在canvas上显示一张图片</p>
+        <p>cxt.putImageData(image, x, y)</p>
+        <ul>
+            <li>image: 表示重新绘制的图形，用getImageData方法获取的canvasPixelArray对象</li>
+            <li>x, y: 表示重新绘制图形区域左上角的横、纵坐标</li>
+        </ul>
+        <p class="tips">注意：putImageData方法是和getImageData方法配合使用的。</p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>08-07图像透明效果</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+        span {
+            color: red;
+        }
+        .mr-10 {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="430" height="220" style="border: 1px dashed gray;"></canvas>
+
+    <div>
+        <h3>透明效果</h3>
+        <p>实现的算法是：<span>将每个像素的透明度都 * n</span></p>
+        <h3>语法</h3>
+        <p id="text"></p>
+        <p class="tips">注意：这里的透明效果仅针对图片，而cxt.globalAlpha则是针对整个canvas，是有区别的。</p>
+    </div>
+
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+
+        window.onload = function() {
+            const cnv = $$('canvas');
+            const cxt = cnv.getContext('2d');
+            
+            const img = new Image();
+            img.src = './green.jpeg';
+            img.onload = function() {
+                // 全部绘制图片
+                cxt.drawImage(img, 10, 10);
+                const imgData = cxt.getImageData(10, 10, 200, 200);
+                const data = imgData.data;
+                for(let i = 0; i < data.length; i += 4) {
+                    const n = 0.3
+                    data[i + 3] = data[i + 3] * n
+                }
+                cxt.putImageData(imgData, 220, 10);
+            }
+
+            const text = `for(let i = 0; i < data.length; i += 4) {
+                    const n = 0.3
+                    data[i + 3] = data[i + 3] * n
+                }`
+            $$('text').innerText = text;
+        }
+    </script>
+</body>
+</html>
