@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>10-01beginPath</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+        p span {
+            color: red;
+        }
+        .mr-10 {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="200" style="border: 1px dashed gray;"></canvas>
+    <p>三条路径之前都没有加beginPath，后面的状态会覆盖前面的。</p>
+    <canvas id="canvas1" width="200" style="border: 1px dashed gray;"></canvas>
+    <p>三条路径之前都加了beginPath，各自会展示各自的状态。</p>
+
+    <div>
+        <h3>路径</h3>
+        <p>除了矩形，其他所有的canvas基本图形包括直线、多边形、圆形、弧线、贝塞尔曲线都是以路径为基础的。</p>
+        <h3>beginPath</h3>
+        <p>开始一个路径。</p>
+        <span style="background:#eee">
+            cxt.beginPath()
+        </span>
+        <p class="tips">只运用于canvas基本图形。</p>
+        <p class="tips">是否属于同一路径的标准是<span>是否使用了beginPath的方法，而不是视觉上的首尾相连。</span></p>
+    </div>
+
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+
+        window.onload = function() {
+            const cnv = $$('canvas');
+            const cxt = cnv.getContext('2d');
+
+            cxt.lineWidth = 5;
+
+            // 第一条直线
+            cxt.moveTo(50, 40);
+            cxt.lineTo(150, 40);
+            cxt.strokeStyle = 'red';
+            cxt.stroke();
+
+            // 第二条直线
+            cxt.moveTo(50, 80);
+            cxt.lineTo(150, 80);
+            cxt.strokeStyle = 'green';
+            cxt.stroke();
+
+            // 第三条直线
+            cxt.moveTo(50, 120);
+            cxt.lineTo(150, 120);
+            cxt.strokeStyle = 'blue';
+            cxt.stroke();
+
+            const cnv1 = $$('canvas1');
+            const cxt1 = cnv1.getContext('2d');
+
+            cxt1.lineWidth = 5;
+
+            // 第一条直线
+            cxt1.moveTo(50, 40);
+            cxt1.lineTo(150, 40);
+            cxt1.strokeStyle = 'red';
+            cxt1.stroke();
+
+            // 第二条直线
+            cxt1.beginPath();
+            cxt1.moveTo(50, 80);
+            cxt1.lineTo(150, 80);
+            cxt1.strokeStyle = 'green';
+            cxt1.stroke();
+
+            // 第三条直线
+            cxt1.beginPath();
+            cxt1.moveTo(50, 120);
+            cxt1.lineTo(150, 120);
+            cxt1.strokeStyle = 'blue';
+            cxt1.stroke();
+        }
+    </script>
+</body>
+</html>

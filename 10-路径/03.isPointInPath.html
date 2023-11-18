@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>10-03isPointInPath</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+        p span {
+            color: red;
+        }
+        .mr-10 {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div style="display: flex;">
+        <div class="mr-10">
+            <canvas id="canvas" width="200" style="border: 1px dashed gray;"></canvas>
+            <p id="text"></p>
+        </div>
+        <div>
+            <canvas id="canvas1" width="200" style="border: 1px dashed gray;"></canvas>
+            <p id="text1"></p>
+        </div>
+    </div>
+    <div>
+        <h3>isPointInPath</h3>
+        <p>判断某一个点是否存在于当前路径中</p>
+        <span style="background:#eee">
+            cxt.isPointInPath(x, y)
+        </span>
+        <p>如果点(x,y)位于当前路径中，返回true，如果不在返回false</p>
+        <p class="tips">注意：该方法不支持strokeRect和fillRect，只能用rect来替代</p>
+        <p class="tips">注意：该方法可以用在判断某点是否位于某个图形中</p>
+        <p class="tips">注意：该方法判断点在不在单独的线上，IE支持，但是chrome和firefox不支持</p>
+    </div>
+
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+
+        window.onload = function() {
+            const cnv = $$('canvas');
+            const cxt = cnv.getContext('2d');
+
+            cxt.strokeStyle = 'hotpink';
+            cxt.rect(50, 50, 80, 80);
+            cxt.stroke();
+            if (cxt.isPointInPath(100, 50)) {
+                $$('text').innerText = '点(100, 50)存在路径中';
+            } else {
+                $$('text').innerText = '点(100, 50)不存在路径中';
+            }
+
+            const cnv1 = $$('canvas1');
+            const cxt1 = cnv1.getContext('2d');
+
+            cxt1.moveTo(50, 50);
+            cxt1.lineTo(150, 50);
+            cxt1.strokeStyle = 'hotpink';
+            cxt1.stroke();
+            if (cxt1.isPointInPath(100, 50)) {
+                $$('text1').innerText = '点(100, 50)存在路径中';
+            } else {
+                $$('text1').innerHTML = '点(100, 50)不存在路径中<br/>在chrome和fireFox中不生效<br/>在IE中生效';
+            }
+        }
+    </script>
+</body>
+</html>
