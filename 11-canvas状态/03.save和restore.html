@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>11-03save和restore</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+        p span {
+            color: red;
+        }
+        .mr-10 {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h3>save方法</h3>
+        <p>可以使用save方法保存当前状态</p>
+        <p>cxt.save()</p>
+        <h3>restore方法</h3>
+        <p>可以使用restore方法回复之前状态</p>
+        <p>cxt.restore()</p>
+        <h3>canvas状态的保存和恢复，主要用于以下3种场合</h3>
+        <ul>
+            <li>图形或图片剪切</li>
+            <li>图形或图片变形</li>
+            <li>改变canvas状态的时候</li>
+        </ul>
+        <p class="tips">save()只能保存“状态”，不能保存“图形”。</p>
+        <h3>相关案例</h3>
+        <h4>图形或图片剪切</h4>
+        <div style="display:flex;text-align: center;">
+            <div class="mr-10">
+                <canvas id="canvas" width="200" style="border: 1px dashed gray;"></canvas>
+                <p><button id="btn">绘制新图</button></p>
+                <p>添加save+restore</p>
+            </div>
+            <div>
+                <canvas id="canvas1" width="200" style="border: 1px dashed gray;"></canvas>
+                <p><button id="btn1">绘制新图</button></p>
+                <p>没加save+restore</p>
+            </div>
+        </div>
+        <h4>图形或图片变形</h4>
+        <div style="display:flex;text-align: center;">
+            <div class="mr-10">
+                <canvas id="canvas3" width="200" style="border: 1px dashed gray;"></canvas>
+                <p>加save+restore<br/>第二个坐标正常显示</p>
+            </div>
+            <div>
+                <canvas id="canvas2" width="200" style="border: 1px dashed gray;"></canvas>
+                <p>不加save+restore<br/>第二个坐标变(90,90)</p>
+            </div>
+        </div>
+        <h4>属性状态的改变</h4>
+        <div style="display:flex;text-align: center;">
+            <div class="mr-10">
+                <canvas id="canvas4" width="200" style="border: 1px dashed gray;"></canvas>
+                <p>加save+restore</p>
+            </div>
+            <div>
+                <canvas id="canvas5" width="200" style="border: 1px dashed gray;"></canvas>
+                <p>不加save+restore</p>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+
+        window.onload = function() {
+            const cnv = $$('canvas');
+            const cxt = cnv.getContext('2d');
+
+            cxt.save();
+            cxt.beginPath();
+            cxt.arc(70, 70, 50, 0, 360 * Math.PI / 180, true);
+            cxt.closePath();
+            cxt.stroke();
+            // 裁剪区域
+            cxt.clip();
+
+            const img = new Image();
+            img.src = './33.jpg';
+            img.onload = function () {
+                cxt.drawImage(img, 20, 20, 100, 100);
+            };
+            $$('btn').onclick = function () {
+                cxt.restore();
+                cxt.clearRect(0, 0, cnv.width, cnv.height);
+                const img1 = new Image();
+                img1.src = './green.jpeg';
+                img1.onload = function () {
+                    cxt.drawImage(img1, 20, 20, 100, 100);
+                }
+            }
+
+            const cnv1 = $$('canvas1');
+            const cxt1 = cnv1.getContext('2d');
+
+            cxt1.beginPath();
+            cxt1.arc(70, 70, 50, 0, 360 * Math.PI / 180, true);
+            cxt1.closePath();
+            cxt1.stroke();
+            // 裁剪区域
+            cxt1.clip();
+
+            const img2 = new Image();
+            img2.src = './33.jpg';
+            img2.onload = function () {
+                cxt1.drawImage(img2, 20, 20, 100, 100);
+            };
+            $$('btn1').onclick = function () {
+                cxt1.restore();
+                cxt1.clearRect(0, 0, cnv.width, cnv.height);
+                const img3 = new Image();
+                img3.src = './green.jpeg';
+                img3.onload = function () {
+                    cxt1.drawImage(img3, 20, 20, 100, 100);
+                }
+            }
+
+            const cnv2 = $$('canvas2');
+            const cxt2 = cnv2.getContext('2d');
+
+            cxt2.fillStyle = 'hotpink';
+            cxt2.translate(30, 30);
+            cxt2.fillRect(0, 0, 100, 50);
+
+            cxt2.fillStyle = 'LightSkyBlue';
+            cxt2.translate(60, 60);
+            cxt2.fillRect(0, 0, 100, 50);
+
+            const cnv3 = $$('canvas3');
+            const cxt3 = cnv3.getContext('2d');
+
+            cxt3.save();
+            cxt3.fillStyle = 'hotpink';
+            cxt3.translate(30, 30);
+            cxt3.fillRect(0, 0, 100, 50);
+
+            cxt3.restore();
+            cxt3.fillStyle = 'LightSkyBlue';
+            cxt3.translate(60, 60);
+            cxt3.fillRect(0, 0, 100, 50);
+
+            const cnv4 = $$('canvas4');
+            const cxt4 = cnv4.getContext('2d');
+
+            const text = 'canvas';
+            cxt4.font = 'bold 20px Arial';
+            cxt4.fillStyle = 'hotpink';
+            cxt4.save();
+            cxt4.fillText(text, 50, 40);
+
+            cxt4.fillStyle = 'LightSkyBlue';
+            cxt4.fillText(text, 50, 80);
+            cxt4.restore();
+            cxt4.fillText(text, 50, 120);
+
+            const cnv5 = $$('canvas5');
+            const cxt5 = cnv5.getContext('2d');
+            cxt5.font = 'bold 20px Arial';
+            cxt5.fillStyle = 'hotpink';
+            cxt5.fillText(text, 50, 40);
+
+            cxt5.fillStyle = 'LightSkyBlue';
+            cxt5.fillText(text, 50, 80);
+            cxt5.fillText(text, 50, 120);
+        }
+    </script>
+</body>
+</html>

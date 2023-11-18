@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>12-04globalCompositeOperation</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+        p span {
+            color: red;
+        }
+        .mr-10 {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div style="display: flex;text-align: center;">
+        <div class="mr-10">
+            <canvas id="canvas1" width="200" style="border: 1px dashed gray;"></canvas>
+            <p>source-over</p>
+        </div>
+        <div class="mr-10">
+            <canvas id="canvas2" width="200" style="border: 1px dashed gray;"></canvas>
+            <p>source-in</p>
+        </div>
+        <div class="mr-10">
+            <canvas id="canvas3" width="200" style="border: 1px dashed gray;"></canvas>
+            <p>source-out</p>
+        </div>
+        <div>
+            <canvas id="canvas4" width="200" style="border: 1px dashed gray;"></canvas>
+            <p>source-atop</p>
+        </div>
+    </div>
+    <div style="display: flex;text-align: center;">
+        <div class="mr-10">
+            <canvas id="canvas5" width="200" style="border: 1px dashed gray;"></canvas>
+            <p>destination-over</p>
+        </div>
+        <div class="mr-10">
+            <canvas id="canvas6" width="200" style="border: 1px dashed gray;"></canvas>
+            <p>destination-in</p>
+        </div>
+        <div class="mr-10">
+            <canvas id="canvas7" width="200" style="border: 1px dashed gray;"></canvas>
+            <p>destination-out</p>
+        </div>
+        <div>
+            <canvas id="canvas8" width="200" style="border: 1px dashed gray;"></canvas>
+            <p>destination-atop</p>
+        </div>
+    </div>
+    <div style="display: flex;text-align: center;">
+        <div class="mr-10">
+            <canvas id="canvas9" width="200" style="border: 1px dashed gray;"></canvas>
+            <p>lighter</p>
+        </div>
+        <div class="mr-10">
+            <canvas id="canvas10" width="200" style="border: 1px dashed gray;"></canvas>
+            <p>darken</p>
+        </div>
+        <div class="mr-10">
+            <canvas id="canvas11" width="200" style="border: 1px dashed gray;"></canvas>
+            <p>copy</p>
+        </div>
+        <div class="mr-10">
+            <canvas id="canvas12" width="200" style="border: 1px dashed gray;"></canvas>
+            <p>xor</p>
+        </div>
+    </div>
+    
+
+    <div>
+        <h3>globalCompositeOperation方法</h3>
+        <p>使用该方法可以改变交叉图形的显示方式</p>
+        <p>cxt.globalCompositeOperation = 属性值</p>
+        <ul>
+            <li>source-over: 默认值，新图覆盖旧图</li>
+            <li>destination--over: 旧图覆盖新图</li>
+            <li>copy: 只显示新图，旧图做透明</li>
+
+            <li>destination-atop: 只展示新图交叉部分+新图其余部分，其余部分透明</li>
+            <li>destination-in: 只展示新图交叉部分，其余部分透明</li>
+            <li>destination-out: 只展示新图不交叉部分，其余部分透明</li>
+
+            <li>lighter: 两图都展示，交叉部分颜色相加</li>
+            <li>darken: 两图都展示，交叉部分颜色值相减</li>
+            <li>xor: 两图都展示，交叉部分变透明</li>
+            <li>source-atop: 只展示旧图交叉部分+旧图其余部分，其余部分透明</li>
+            <li>source-in: 只展示旧图交叉部分，其余部分透明</li>
+            <li>source-out: 只展示旧图不交叉部分，其余部分透明</li>
+        </ul>
+        <p class="tips">注意：很多书上的darker属性，已经在2007的chrome规范上删除。现在是<span>darken</span>。使用darker chrome会不生效。</p>
+    </div>
+
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+
+        window.onload = function() {
+            const typeList = [
+                'source-over',
+                'source-in',
+                'source-out',
+                'source-atop',
+                'destination-over',
+                'destination-atop',
+                'destination-in',
+                'destination-out',
+                'lighter',
+                'darken',
+                'copy',
+                'xor'];
+            typeList.forEach((value, index) => {
+                console.log(value);
+                const cnv = $$('canvas' + (index + 1));
+                const cxt = cnv.getContext('2d');
+                cxt.fillStyle = 'blue';
+                cxt.fillRect(30, 30, 60, 60);
+                cxt.beginPath();
+                cxt.arc(100, 100, 40, 0, Math.PI * 2, true);
+                cxt.closePath();
+                cxt.fillStyle = 'red';
+                cxt.globalCompositeOperation = value;
+                cxt.fill();
+            })
+            
+        }
+    </script>
+</body>
+</html>

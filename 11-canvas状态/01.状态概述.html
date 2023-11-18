@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>11-01状态概述</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+        p span {
+            color: red;
+        }
+        .mr-10 {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h3>canvas状态</h3>
+        <p>canvas是基于状态绘制图形的。</p>
+        <p>每一次绘制，都会检测整个程序定义的所有状态。包括strokeStyle，fillStyle和lineWidth等。当一个状态值没有改变时就会使用最初的值。</p>
+        <h3>状态改变考虑</h3>
+        <p>如果使用了beginPath，则不同路径使用不同的值</p>
+        <p>如果没有使用beginPath，则后面的值会覆盖前面的值</p>
+    </div>
+</body>
+</html>

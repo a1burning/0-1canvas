@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>11-02clip</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+        p span {
+            color: red;
+        }
+        .mr-10 {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div style="display:flex;text-align: center;">
+        <div class="mr-10">
+            <canvas id="canvas" width="200" style="border: 1px dashed gray;"></canvas>
+            <p>添加clip的</p>
+        </div>
+        <div>
+            <canvas id="canvas1" width="200" style="border: 1px dashed gray;"></canvas>
+            <p>没加clip的</p>
+        </div>
+    </div>
+
+    <div>
+        <h3>clip方法</h3>
+        <p>基本图形+clip可以指定剪切区域，指定之后后面绘制的图形如果超出这个剪辑区域，则超出部分不会被显示。</p>
+        <p>cxt.clip()</p>
+        <h3>剪切方法步骤</h3>
+        <ol>
+            <li>在canvas中绘制一个基本图形</li>
+            <li>调用clip方法，这个基本图形会变成剪切区域</li>
+        </ol>
+        <p class="tips">clip方法不支持strokeRect和fillRect方法。只能用rect来代替。</p>
+        <div style="display:flex;text-align: center;">
+            <div class="mr-10">
+                <canvas id="canvas2" width="200" style="border: 1px dashed gray;"></canvas>
+                <p>使用strokeRect不生效</p>
+            </div>
+            <div>
+                <canvas id="canvas3" width="200" style="border: 1px dashed gray;"></canvas>
+                <p>使用rect生效</p>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+
+        window.onload = function() {
+            const cnv = $$('canvas');
+            const cxt = cnv.getContext('2d');
+
+            cxt.beginPath();
+            cxt.arc(50, 50, 40, 0, 360 * Math.PI / 180, true);
+            cxt.closePath();
+            cxt.strokeStyle = 'hotpink';
+            cxt.stroke();
+            // 裁剪区域
+            cxt.clip();
+            cxt.beginPath();
+            cxt.fillStyle = '#66CCFF';
+            cxt.fillRect(50, 50, 100, 80);
+
+            // 不加clip的
+            const cnv1 = $$('canvas1');
+            const cxt1 = cnv1.getContext('2d');
+
+            cxt1.beginPath();
+            cxt1.arc(50, 50, 40, 0, 360 * Math.PI / 180, true);
+            cxt1.closePath();
+            cxt1.strokeStyle = 'hotpink';
+            cxt1.stroke();
+
+            cxt1.beginPath();
+            cxt1.fillStyle = '#66CCFF';
+            cxt1.fillRect(50, 50, 100, 80);
+
+            const cnv2 = $$('canvas2');
+            const cxt2 = cnv2.getContext('2d');
+
+            cxt2.beginPath();
+            cxt2.strokeStyle = 'hotpink';
+            cxt2.strokeRect(20, 20, 100, 80);
+            cxt2.clip();
+
+            cxt2.beginPath();
+            cxt2.arc(120, 60, 40, 0, 360 * Math.PI / 180, true);
+            cxt2.closePath();
+            cxt2.fillStyle = '#66CCFF';
+            cxt2.fill();
+
+            const cnv3 = $$('canvas3');
+            const cxt3 = cnv3.getContext('2d');
+
+            cxt3.beginPath();
+            cxt3.strokeStyle = 'hotpink';
+            cxt3.rect(20, 20, 100, 80);
+            cxt3.stroke();
+            cxt3.clip();
+
+            cxt3.beginPath();
+            cxt3.arc(120, 60, 40, 0, 360 * Math.PI / 180, true);
+            cxt3.closePath();
+            cxt3.fillStyle = '#66CCFF';
+            cxt3.fill();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>12-02toDataURL</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+        p span {
+            color: red;
+        }
+        .mr-10 {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div style="display:flex;text-align: center;">
+        <div class="mr-10">
+            <canvas id="canvas" width="200" style="border: 1px dashed gray;"></canvas>
+            <p><a id="preview">预览</a></p>
+            <p id="text" style="width: 300px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;"></p>
+        </div>
+    </div>
+
+    <div>
+        <h3>toDataURL方法</h3>
+        <p>获取canvas对象产生的位图字符串</p>
+        <p>cnv.toDataURL(type)</p>
+        <ul>
+            <li>type：可选参数，表示MIME类型。如果被省略，默认是image/png类型。</li>
+        </ul>
+    </div>
+
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+
+        window.onload = function() {
+            const cnv = $$('canvas');
+            const cxt = cnv.getContext('2d');
+            
+            const text = 'canvas';
+            cxt.font = 'bold 40px Arial';
+            cxt.shadowOffsetX = 5;
+            cxt.shadowOffsetY = 5;
+            cxt.shadowColor = 'LightSkyBlue';
+            cxt.shadowBlur = 10;
+            cxt.fillStyle = 'hotpink';
+            cxt.fillText(text, 30, 80);
+
+            $$('preview').onclick = function () {
+                preView()
+            }
+
+            $$('text').innerText = cnv.toDataURL('image/png');
+
+            function preView (content) {
+                const string = cnv.toDataURL('image/png');
+                const iframe = "<iframe width='100%' height='100%' src='" + string + "'></iframe>"
+                const x = window.open()
+                x.document.open()
+                x.document.write(iframe)
+                x.document.close()
+            };
+        }
+    </script>
+</body>
+</html>

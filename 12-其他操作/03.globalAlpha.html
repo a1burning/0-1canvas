@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>12-03globalAlpha</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+        p span {
+            color: red;
+        }
+        .mr-10 {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="200" style="border: 1px dashed gray;"></canvas>
+
+    <div>
+        <h3>globalAlpha方法</h3>
+        <p>使用该方法定义canvas环境的透明度</p>
+        <p>cxt.globalAlpha = 数值</p>
+        <p>globalAlpha属性的默认值为1.0（完全不透明），取值范围在0-1之间。</p>
+        <p class="tips">注意：定义这个属性之后，会对所有画布起作用</p>
+    </div>
+
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+
+        window.onload = function() {
+            const cnv = $$('canvas');
+            const cxt = cnv.getContext('2d');
+            
+            const text = 'canvas';
+            cxt.font = 'bold 40px Arial';
+            cxt.globalAlpha = 0.3;
+            cxt.fillStyle = 'hotpink';
+            cxt.fillText(text, 10, 30);
+            cxt.fillRect(10, 50, 100, 50)
+        }
+    </script>
+</body>
+</html>
