@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>09-03径向渐变</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+        span {
+            color: red;
+        }
+        .mr-10 {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="200" style="border: 1px dashed gray;"></canvas>
+
+    <div>
+        <h3>径向渐变</h3>
+        <p>是颜色从内到外的圆形渐变。径向渐变是圆形或椭圆形的渐变，是从一个点向所有方向的渐变。</p>
+        <p>const gnt = cxt.createRadialGradient(x1, y1, r1, x2, y2, r2)</p>
+        <ul>
+            <li>x1, y1: 渐变起始的圆心坐标</li>
+            <li>r1: 渐变起始的圆心半径</li>
+            <li>x2, y2: 渐变终止的圆心坐标</li>
+            <li>r2: 渐变终止的圆心半径</li>
+        </ul>
+        <p class="tips">表示从圆心是x1,y1，半径是r1向圆心是x2,y2，半径是r2的径向渐变。</p>
+        <p>gnt.addColorStop(value, color)</p>
+        <ul>
+            <li>value: 0-1之间的任意值，表示渐变位置的偏移量。</li>
+            <li>color: 渐变颜色</li>
+        </ul>
+        <p class="tips">如果只有一个，那么不会有渐变效果，会填满整个区域。有两个以上才会有渐变效果。</p>
+        <h3>语法</h3>
+        <p>const gnt = cxt.createRadialGradient(x1, y1, r1, x2, y2, r2)</p>
+        <p>gnt.addColorStop(value1, color1)</p>
+        <p>gnt.addColorStop(value2, color2)</p>
+        <p>cxt.fillStyle = gnt</p>
+        <p>cxt.fill()</p>
+        <h3>实现径向渐变的3个步骤</h3>
+        <ol>
+            <li>调用createRadialGradient方法创建一个渐变对象，并赋值给gnt</li>
+            <li>调用gnt对象的addColorStop方法n次，几次就是渐变几次</li>
+            <li>将gnt赋值给fillStyle属性并绘制出来</li>
+        </ol>
+    </div>
+
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+
+        window.onload = function() {
+            const cnv = $$('canvas');
+            const cxt = cnv.getContext('2d');
+
+            // 画圆
+            cxt.beginPath();
+            cxt.arc(80, 80, 50, 0, 2 * Math.PI, true);
+            cxt.closePath();
+            // 径向渐变
+            const gnt = cxt.createRadialGradient(100, 60, 10, 80, 80, 50);
+            gnt.addColorStop(0, 'white');
+            gnt.addColorStop(0.9, 'hotpink');
+            gnt.addColorStop(1, 'rgba(0, 0, 0, 0)');
+            cxt.fillStyle = gnt;
+            cxt.fill();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>09-04径向渐变案例</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+        span {
+            color: red;
+        }
+        .mr-10 {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h3>多种颜色的径向渐变</h3>
+    <canvas id="canvas" width="120" height="120" style="border: 1px dashed gray;"></canvas>
+    <h3>动态的多色渐变</h3>
+    <canvas id="canvas1" width="120" height="120" style="border: 1px dashed gray;"></canvas>
+
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+
+        window.onload = function() {
+            const cnv = $$('canvas');
+            const cxt = cnv.getContext('2d');
+
+            // 径向渐变
+            const gnt = cxt.createRadialGradient(60, 60, 0, 60, 60, 60);
+            gnt.addColorStop(0, 'magenta');
+            gnt.addColorStop(0.25, 'blue');
+            gnt.addColorStop(0.5, 'green');
+            gnt.addColorStop(0.75, 'yellow');
+            gnt.addColorStop(1, 'hotpink');
+            cxt.fillStyle = gnt;
+            cxt.fillRect(0, 0, 120, 120);
+
+            const cnv1 = $$('canvas1');
+            const cxt1 = cnv1.getContext('2d');
+
+            let i = 0
+            setInterval(() => {
+                const gnt1 = cxt1.createRadialGradient(60, 60, 0, 60, 60, 60);
+                gnt1.addColorStop(i * 0, 'magenta');
+                gnt1.addColorStop(i * 0.25, 'blue');
+                gnt1.addColorStop(i * 0.5, 'green');
+                gnt1.addColorStop(i * 0.75, 'yellow');
+                gnt1.addColorStop(i * 1, 'hotpink');
+                cxt1.fillStyle = gnt1;
+
+                i = i + 0.1;
+                if (i >= 1) {
+                    i = 0;
+                }
+                cxt1.fillRect(0, 0, 120, 120);
+            }, 50)
+        }
+    </script>
+</body>
+</html>

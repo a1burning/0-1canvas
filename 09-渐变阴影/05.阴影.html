@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>09-05阴影</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+        span {
+            color: red;
+        }
+        .mr-10 {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div style="display: flex;text-align: center;">
+        <div class="mr-10">
+            <p>图形阴影</p>
+            <canvas id="canvas" width="200" style="border: 1px dashed gray;"></canvas>
+        </div>
+        <div class="mr-10">
+            <p>文字阴影</p>
+            <canvas id="canvas1" width="200" style="border: 1px dashed gray;"></canvas>
+        </div>
+        <div class="mr-10">
+            <p>图片阴影</p>
+            <canvas id="canvas2" width="300" style="border: 1px dashed gray;"></canvas>
+        </div>
+    </div>
+
+    <div>
+        <h3>阴影</h3>
+        <p>可以用来为图形、文字、图片添加阴影效果。</p>
+        <ul>
+            <li>shadowOffsetX: 阴影与图形的水平距离，默认值为0，大于0向右偏移，小于0向左偏移</li>
+            <li>shadowOffsetY: 阴影与图形的垂直距离，默认值为0，大于0向下偏移，小于0向上偏移</li>
+            <li>shadowColor: 阴影颜色，默认为黑色</li>
+            <li>shadowBlur: 阴影的模糊值，默认为0，值越大模糊度越强，值越小模糊度越小。</li>
+        </ul>
+        <p class="tips">如果想要4个方向都有阴影的效果，那么把offsetX和offsetY的值都设为0就可以。</p>
+    </div>
+
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+
+        window.onload = function() {
+            const cnv = $$('canvas');
+            const cxt = cnv.getContext('2d');
+
+            // 图形阴影
+            cxt.shadowOffsetX = -5;
+            cxt.shadowOffsetY = -5;
+            cxt.shadowColor = 'LightSkyBlue';
+            cxt.shadowBlur = 1;
+            cxt.fillStyle = 'hotpink';
+            cxt.fillRect(30, 30, 50, 50);
+
+            cxt.shadowOffsetX = 5;
+            cxt.shadowOffsetY = 5;
+            // cxt.shadowColor = 'LightSkyBlue';
+            cxt.shadowBlur = 10;
+            cxt.fillStyle = 'hotpink';
+            cxt.fillRect(100, 30, 50, 50);
+
+            // 文字阴影
+            const cnv1 = $$('canvas1');
+            const cxt1 = cnv1.getContext('2d');
+            
+            const text = 'canvas';
+            cxt1.font = 'bold 40px Arial';
+            cxt1.shadowOffsetX = 5;
+            cxt1.shadowOffsetY = 5;
+            cxt1.shadowColor = 'LightSkyBlue';
+            cxt1.shadowBlur = 10;
+            cxt1.fillStyle = 'hotpink';
+            cxt1.fillText(text, 10, 50);
+
+            // 图片
+            const cnv2 = $$('canvas2');
+            const cxt2 = cnv2.getContext('2d');
+
+            const img = new Image();
+            img.src = './33.jpg';
+            img.onload = function () {
+                cxt2.shadowOffsetX = 5;
+                cxt2.shadowOffsetY = 5;
+                cxt2.shadowColor = 'LightSkyBlue';
+                cxt2.shadowBlur = 10;
+                cxt2.drawImage(img, 10, 20, 100, 100);
+
+                cxt2.shadowOffsetX = 0;
+                cxt2.shadowOffsetY = 0;
+                cxt2.shadowColor = 'LightSkyBlue';
+                cxt2.shadowBlur = 10;
+                cxt2.drawImage(img, 150, 20, 100, 100);
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>09-02线性渐变案例</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+        span {
+            color: red;
+        }
+        .mr-10 {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h3>渐变彩虹色</h3>
+    <canvas id="canvas" width="200" style="border: 1px dashed gray;"></canvas>
+    <h3>文字渐变</h3>
+    <canvas id="canvas1" width="200" style="border: 1px dashed gray;"></canvas>
+
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+
+        window.onload = function() {
+            const cnv = $$('canvas');
+            const cxt = cnv.getContext('2d');
+
+            // 彩虹渐变色
+            const gnt = cxt.createLinearGradient(0, 150, 200, 150);
+            const step = (200 / 7) / 200;
+            gnt.addColorStop(0, 'red');
+            gnt.addColorStop(step * 1, 'orange');
+            gnt.addColorStop(step * 2, 'yellow');
+            gnt.addColorStop(step * 3, 'green');
+            gnt.addColorStop(step * 4, 'blue');
+            gnt.addColorStop(step * 5, 'navy');
+            gnt.addColorStop(step * 6, 'purple');
+            cxt.fillStyle = gnt;
+            cxt.fillRect(0, 0, 200, 150);
+
+            const cnv1 = $$('canvas1');
+            const cxt1 = cnv1.getContext('2d');
+
+            // 文字渐变
+            const text = 'canvas';
+            cxt1.font = 'bold 50px Arial';
+            const gnt1 = cxt1.createLinearGradient(0, 75, 200, 75);
+            gnt1.addColorStop(0, 'hotpink');
+            gnt1.addColorStop(1, 'LightSkyBlue');
+            cxt1.fillStyle = gnt1;
+            cxt1.fillText(text, 10, 90);
+        }
+    </script>
+</body>
+</html>
