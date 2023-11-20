@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>13-04键盘移动图形</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+        p span {
+            color: red;
+        }
+        .mr-10 {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="200" style="border: 1px dashed gray;"></canvas>
+    <p id="text"></p>
+    <p>小球必须要有default的表达式，否则小球会消失。</p>
+
+    <script src="./tool.js"></script>
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+
+        function updateText(x, y, diretion) {
+            $$('text').innerHTML = `当前坐标(${x},${y}), 获取方向${diretion}`
+        }
+
+        window.onload = function() {
+            const cnv = $$('canvas');
+            const cxt = cnv.getContext('2d');
+            
+            drawBall(cxt, cnv.width / 2, cnv.height / 2);
+            // 初始化变量
+            let x = 100;
+            let y = 75;
+            const step = 2;
+
+            const key = getKey();
+            updateText(x, y, key.direction);
+            window.addEventListener('keydown', function(e) {
+                cxt.clearRect(0, 0, cnv.width, cnv.height);
+                // 根据key.direction获取方向
+                switch(key.direction) {
+                    case 'up':
+                        y -= step;
+                        drawBall(cxt, x, y);
+                        updateText(x, y, key.direction);
+                        break;
+                    case 'down':
+                        y += step;
+                        drawBall(cxt, x, y);
+                        updateText(x, y, key.direction);
+                        break;
+                    case 'left':
+                        x -= step;
+                        drawBall(cxt, x, y);
+                        updateText(x, y, key.direction);
+                        break;
+                    case 'right':
+                        x += step;
+                        drawBall(cxt, x, y);
+                        updateText(x, y, key.direction);
+                        break;
+                    default:
+                        drawBall(cxt, x, y);
+                        updateText(x, y, key.direction);
+                        break;
+                }
+            }, false)
+        }
+    </script>
+</body>
+</html>

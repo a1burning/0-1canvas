@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>13-03键盘事件</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+        p span {
+            color: red;
+        }
+        .mr-10 {
+            margin-right: 10px;
+        }
+        table,td,th {
+            border: 1px solid palevioletred;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h3>键盘事件</h3>
+        <p>在canvas中，常用的键盘事件共有2种：</p>
+        <ul>
+            <li>键盘按下：keydown</li>
+            <li>键盘松开：keyup</li>
+        </ul>
+        <p class="tips">实际开发中，keyup和keydown是配合使用的。</p>
+        <p class="tips">canvas本身不支持键盘事件，所以一般情况下我们都是使用window对象来实现对canvas中键盘事件的监听。</p>
+        <p class="tips">不需要进行兼容处理，因为canvas是IE9才支持的。</p>
+        <h3>语法</h3>
+        <p>window.addEventListener(type, fn, false)</p>
+        <ul>
+            <li>type: 指的是事件类型。如果只是针对canvas，那么只有【keyup】和【keydown】两种</li>
+            <li>fn: 事件处理函数</li>
+        </ul>
+        <h3>常用的键盘按键</h3>
+        <table>
+            <tr>
+                <th>按键</th>
+                <th>keyCode</th>
+            </tr>
+            <tr>
+                <td>W</td>
+                <td>87</td>
+            </tr>
+            <tr>
+                <td>S</td>
+                <td>83</td>
+            </tr>
+            <tr>
+                <td>A</td>
+                <td>65</td>
+            </tr>
+            <tr>
+                <td>D</td>
+                <td>68</td>
+            </tr>
+            <tr>
+                <td>↑</td>
+                <td>38</td>
+            </tr>
+            <tr>
+                <td>↓</td>
+                <td>40</td>
+            </tr>
+            <tr>
+                <td>←</td>
+                <td>37</td>
+            </tr>
+            <tr>
+                <td>→</td>
+                <td>39</td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

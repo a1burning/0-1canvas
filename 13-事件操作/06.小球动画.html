@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>13-06小球动画</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+        p span {
+            color: red;
+        }
+        .mr-10 {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="200" style="border: 1px dashed gray;"></canvas>
+    <p id="text"></p>
+    <p>小球必须要有default的表达式，否则小球会消失。</p>
+
+    <script src="./tool.js"></script>
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+
+        window.onload = function() {
+            const cnv = $$('canvas');
+            const cxt = cnv.getContext('2d');
+            
+            let x = 0;
+            const step = 2;
+            drawBall(cxt, x, 70);
+            (function frame () {
+                window.requestAnimationFrame(frame);
+                clearCanvas(cnv, cxt);
+
+                drawBall(cxt, x, 70);
+                x += step;
+            })();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>13-01鼠标事件</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+        p span {
+            color: red;
+        }
+        .mr-10 {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h3>canvas事件</h3>
+        <p>canvas中，常见的事件有3种：鼠标事件、键盘事件和循环事件</p>
+        <h3>鼠标事件</h3>
+        <ul>
+            <li>鼠标按下：mousedown</li>
+            <li>鼠标松开：mouseup</li>
+            <li>鼠标移动：mousemove</li>
+        </ul>
+        <p class="tips">先执行mousedown，再执行mouseup。</p>
+        <h3>鼠标实现拖动效果步骤</h3>
+        <ol>
+            <li>通过mousedown判断是选中的哪个图形或元素</li>
+            <li>用mousemove来拖动选中的图形元素</li>
+            <li>最后在mouseup时停止拖动</li>
+        </ol>
+    </div>
+</body>
+</html>

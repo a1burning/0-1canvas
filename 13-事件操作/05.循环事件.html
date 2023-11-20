@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>13-05循环事件</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+        p span {
+            color: red;
+        }
+        .mr-10 {
+            margin-right: 10px;
+        }
+        table,td,th {
+            border: 1px solid palevioletred;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h3>循环事件</h3>
+        <p>requestAnimationFrame方法</p>
+        <p>requestAnimationFrame方法可以保证动画在每一帧都执行，并且动画的执行效率比setInterval要高。</p>
+        <p>requestAnimationFrame方法可以保证动画的帧率是60帧/秒，也就是说，每一帧的间隔时间是16ms。</p>
+        
+        <p class="tips">不建议使用setInterval来实现动画效果，因为这种方式不能准确的控制动画的帧率，有一定的性能问题。</p>
+        <p class="tips">无需手动设置时间，因为这个方法会根据浏览器绘制的帧率自动进行调整。</p>
+        <p class="tips">requestAnimationFrame方法是浏览器提供的API，并不是JavaScript语言的API。</p>
+        <h3>语法</h3>
+        <p>(function frame () {</p>
+        <p>window.requestAnimationFrame(frame)</p>
+        <p>cxt.clearRect(0, 0, cnv.width, cnv.height);</p>
+        <p>})();</p>
+        <p class="tips">上面定义了一个自执行函数frame，然后在内部不断地调用frame，从而实现循环效果。还需要对画布进行清空操作。</p>
+        <h3>canvas动画的原理</h3>
+        <p>使用requestAnimationFrame方法不断地清除canvas，然后重绘图形。</p>
+    </div>
+</body>
+</html>
