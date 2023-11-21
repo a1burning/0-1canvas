@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>14-04两点间的距离</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+        p span {
+            color: red;
+        }
+        .mr-10 {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="200" style="border: 1px dashed gray;"></canvas>
+    <p id="text"></p>
+    <h3>两点间的距离</h3>
+    <p>利用勾股定理就可以算出来。</p>
+    <h3>语法</h3>
+    <p>dx = x1 - x2</p>
+    <p>dy = y1 - y2</p>
+    <p>distance = Math.sqrt(dx * dx + dy * dy)</p>
+
+    <script src="../assets/js/tool.js"></script>
+    <script src="../assets/js/arrow.js"></script>
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+
+        window.onload = function() {
+            const cnv = $$('canvas');
+            const cxt = cnv.getContext('2d');
+
+            const text = $$('text');
+            const x = cnv.width / 2;
+            const y = cnv.height / 2;
+
+            const mouse = getMouse(cnv);
+            (function drawFrame() {
+                window.requestAnimationFrame(drawFrame, cnv);
+                clearCanvas(cnv);
+                
+                cxt.save();
+                cxt.beginPath();
+                cxt.moveTo(x, y);
+                cxt.lineTo(mouse.x, mouse.y);
+                cxt.closePath();
+                cxt.strokeStyle = 'red';
+                cxt.stroke();
+                cxt.restore();
+
+                const dx = mouse.x - x;
+                const dy = mouse.y - y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                text.innerHTML = `鼠标指针与中心点的距离为：${distance}`;
+            })();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>14-05圆周运动</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+        p span {
+            color: red;
+        }
+        .mr-10 {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div style="display:flex;text-align: center;">
+        <div class="mr-10">
+            <canvas id="canvas" width="200" style="border: 1px dashed gray;"></canvas>
+            <p>正圆运动</p>
+        </div>
+        <div>
+            <canvas id="canvas1" width="200" style="border: 1px dashed gray;"></canvas>
+            <p>椭圆运动</p>
+        </div>
+    </div>
+    <p id="text"></p>
+    <h3>圆周运动</h3>
+    <p>分为正圆运动和椭圆运动</p>
+    <h3>正圆运动语法</h3>
+    <p>x = centerX + Math.cos(angle) * radius</p>
+    <p>y = centerY + Math.sin(angle) * radius</p>
+    <ul>
+        <li>centerX：圆心X坐标</li>
+        <li>centerY：圆心Y坐标</li>
+        <li>radius：半径</li>
+        <li>angle：弧度制的角度</li>
+    </ul>
+    <h3>椭圆运动语法</h3>
+    <p>x = centerX + Math.cos(angle) * radiusX</p>
+    <p>y = centerY + Math.sin(angle) * radiusY</p>
+    <ul>
+        <li>centerX：圆心X坐标</li>
+        <li>centerY：圆心Y坐标</li>
+        <li>radiusX：椭圆在X轴方向的半径</li>
+        <li>radiusY：椭圆在Y轴方向的半径</li>
+        <li>angle：弧度制的角度</li>
+    </ul>
+
+    <script src="../assets/js/tool.js"></script>
+    <script src="../assets/js/ball.js"></script>
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+
+        window.onload = function() {
+            const cnv = $$('canvas');
+            const cxt = cnv.getContext('2d');
+
+            const ball = new Ball(100, 25);
+            const centerX = cnv.width / 2;
+            const centerY = cnv.height / 2;
+            const radius = 50;
+            let angle = 0;
+
+            (function drawFrame() {
+                window.requestAnimationFrame(drawFrame, cnv);
+                clearCanvas(cnv);
+                
+                // 绘制圆形
+                cxt.beginPath();
+                cxt.arc(centerX, centerY, 50, 0, 360 * Math.PI / 180, false);
+                cxt.closePath();
+                cxt.stroke();
+
+                ball.x = centerX + Math.cos(angle) * radius;
+                ball.y = centerY + Math.sin(angle) * radius;
+                ball.fill(cxt);
+
+                angle += 0.05;
+            })();
+
+            const cnv1 = $$('canvas1');
+            const cxt1 = cnv1.getContext('2d');
+
+            const ball1 = new Ball(100, 25);
+            const centerX1 = cnv.width / 2;
+            const centerY1 = cnv.height / 2;
+            const radiusX = 60;
+            const radiusY = 40;
+            let angle1 = 0;
+
+            (function drawFrame1() {
+                window.requestAnimationFrame(drawFrame1, cnv1);
+                clearCanvas(cnv1);
+
+                ball1.x = centerX1 + Math.cos(angle1) * radiusX;
+                ball1.y = centerY1 + Math.sin(angle1) * radiusY;
+                ball1.fill(cxt1);
+
+                angle1 += 0.05;
+            })();
+        }
+    </script>
+</body>
+</html>

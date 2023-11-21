@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>14-06波形运动</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+        .cammand {
+            background: #eee;
+            width: max-content;
+        }
+        p span {
+            color: red;
+        }
+        .mr-10 {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h3>波形运动</h3>
+    <p>常见的波形运动可以分为3种</p>
+    <ul>
+        <li>作用于x轴坐标</li>
+        <li>作用于y轴坐标</li>
+        <li>所用于缩放属性（scaleX和scaleY）</li>
+    </ul>
+    <h3>作用于x轴坐标</h3>
+    <p>当正弦函数作用于物体中心的x轴坐标时，物体会左右摇摆，类似于水草在水流中左右摇摆。</p>
+    <p class="cammand">x = centerX + Math.cos(angle) * range</p>
+    <p class="cammand">angle += speed</p>
+    <ul>
+        <li>centerX：物体中心X坐标</li>
+        <li>centerY：物体中心Y坐标</li>
+        <li>angle：弧度制的角度</li>
+        <li>range：振幅</li>
+        <li>speed：角度改变的大小</li>
+    </ul>
+    <div style="display:flex;text-align: center;">
+        <div class="mr-10">
+            <canvas id="canvas" width="200" style="border: 1px dashed gray;"></canvas>
+            <p>正弦波形运动</p>
+        </div>
+        <div>
+            <canvas id="canvas1" width="200" style="border: 1px dashed gray;"></canvas>
+            <p>余弦波形运动</p>
+        </div>
+    </div>
+
+    <h3>作用于y轴坐标</h3>
+    <p>当正弦函数作用于物体中心的y轴坐标时，物体的运动轨迹刚好就是sin函数的波形。</p>
+    <p class="cammand">y = centerY + Math.sin(angle) * range</p>
+    <p class="cammand">angle += speed</p>
+    <ul>
+        <li>centerX：物体中心X坐标</li>
+        <li>centerY：物体中心Y坐标</li>
+        <li>angle：弧度制的角度</li>
+        <li>range：振幅</li>
+        <li>speed：角度改变的大小</li>
+    </ul>
+    <div style="display:flex;text-align: center;">
+        <div class="mr-10">
+            <canvas id="canvas2" width="200" style="border: 1px dashed gray;"></canvas>
+            <p>正弦波形运动</p>
+        </div>
+        <div>
+            <canvas id="canvas3" width="200" style="border: 1px dashed gray;"></canvas>
+            <p>余弦波形运动</p>
+        </div>
+    </div>
+
+    <h3>作用于缩放属性</h3>
+    <p>当正弦函数作用于物体缩放属性，物体会不断地放大然后缩小，从而呈现一种脉冲动画的效果。</p>
+    <p class="cammand">scaleX = 1 + Math.sin(angle) * range</p>
+    <p class="cammand">scaleY = 1 + Math.sin(angle) * range</p>
+    <p class="cammand">angle += speed</p>
+    <ul>
+        <li>scaleX：x轴方向缩放倍数</li>
+        <li>scaleY：y轴方向缩放倍数</li>
+        <li>angle：弧度制的角度</li>
+        <li>range：振幅</li>
+        <li>speed：角度改变的大小</li>
+    </ul>
+
+    <div style="display:flex;text-align: center;">
+        <div class="mr-10">
+            <canvas id="canvas4" width="200" style="border: 1px dashed gray;"></canvas>
+            <p>正弦波形运动</p>
+        </div>
+        <div>
+            <canvas id="canvas5" width="200" style="border: 1px dashed gray;"></canvas>
+            <p>余弦波形运动</p>
+        </div>
+    </div>
+
+    <script src="../assets/js/tool.js"></script>
+    <script src="../assets/js/ball.js"></script>
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+
+        window.onload = function() {
+            const cnv = $$('canvas');
+            const cxt = cnv.getContext('2d');
+
+            const centerX = cnv.width / 2;
+            const centerY = cnv.height / 2;
+            const ball = new Ball(centerX, centerY);
+            let angle = 0;
+            const range = 80;
+
+            (function drawFrame() {
+                window.requestAnimationFrame(drawFrame, cnv);
+                clearCanvas(cnv);
+                // 绘制坐标系
+                drawPostion(cnv);
+
+                ball.x = centerX + Math.sin(angle) * range;
+                ball.fill(cxt);
+
+                angle += 0.1;
+            })();
+
+            const cnv1 = $$('canvas1');
+            const cxt1 = cnv1.getContext('2d');
+
+            const centerX1 = cnv1.width / 2;
+            const centerY1 = cnv1.height / 2;
+            const ball1 = new Ball(centerX1, centerY1);
+            let angle1 = 0;
+            const range1 = 80;
+
+            (function drawFrame1() {
+                window.requestAnimationFrame(drawFrame1, cnv1);
+                clearCanvas(cnv1);
+                // 绘制坐标系
+                drawPostion(cnv1);
+
+                ball1.x = centerX1 + Math.cos(angle1) * range1;
+                ball1.fill(cxt1);
+
+                angle1 += 0.1;
+            })();
+
+            const cnv2 = $$('canvas2');
+            const cxt2 = cnv2.getContext('2d');
+
+            const centerX2 = cnv2.width / 2;
+            const centerY2 = cnv2.height / 2;
+            const ball2 = new Ball(0, centerY2);
+            let angle2 = 0;
+            const range2 = 40;
+
+            (function drawFrame2() {
+                window.requestAnimationFrame(drawFrame2, cnv2);
+                clearCanvas(cnv2);
+                // 绘制坐标系
+                drawPostion(cnv2);
+
+                ball2.x += 1;
+                ball2.y = centerY2 + Math.sin(angle2) * range2;
+                ball2.fill(cxt2);
+
+                angle2 += 0.1;
+            })();
+
+            const cnv3 = $$('canvas3');
+            const cxt3 = cnv3.getContext('2d');
+
+            const centerX3 = cnv3.width / 2;
+            const centerY3 = cnv3.height / 2;
+            const ball3 = new Ball(0, centerY3);
+            let angle3 = 0;
+            const range3 = 40;
+
+            (function drawFrame3() {
+                window.requestAnimationFrame(drawFrame3, cnv3);
+                clearCanvas(cnv3);
+                // 绘制坐标系
+                drawPostion(cnv3);
+
+                ball3.x += 1;
+                ball3.y = centerY3 + Math.cos(angle3) * range3;
+                ball3.fill(cxt3);
+
+                angle3 += 0.1;
+            })();
+
+            const cnv4 = $$('canvas4');
+            const cxt4 = cnv4.getContext('2d');
+
+            const centerX4 = cnv4.width / 2;
+            const centerY4 = cnv4.height / 2;
+            const ball4 = new Ball(centerX4, centerY4, 25);
+            const range4 = 0.5;
+            let angle4 = 0;
+
+            (function drawFrame4() {
+                window.requestAnimationFrame(drawFrame4, cnv4);
+                clearCanvas(cnv4);
+                // 绘制坐标系
+                drawPostion(cnv4);
+
+                ball4.scaleX = 1 + Math.sin(angle4) * range4;
+                ball4.scaleY = 1 + Math.sin(angle4) * range4;
+                ball4.fill(cxt4);
+
+                angle4 += 0.1;
+            })();
+        }
+    </script>
+</body>
+</html>

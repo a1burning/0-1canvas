@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>14-02三角函数相关知识</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+        p span {
+            color: red;
+        }
+        .mr-10 {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h3>三角函数</h3>
+        <ul>
+            <li>正弦函数：sin(θ)</li>
+            <li>余弦函数：cos(θ)</li>
+            <li>正切函数：tan(θ)</li>
+        </ul>
+        <h3>语法</h3>
+        <ul>
+            <li>sin(θ)：Math.sin(θ * Math.PI / 180)</li>
+            <li>cos(θ)：Math.cos(θ * Math.PI / 180)</li>
+            <li>tan(θ)：Math.tan(θ * Math.PI / 180)</li>
+            <li>arcsin(x / R)：Math.asin(x / R) * (180 / Math.PI)</li>
+            <li>arccos(x / R)：Math.acos(x / R) * (180 / Math.PI)</li>
+            <li>arctan(x / R)：Math.atan(x / R) * (180 / Math.PI)</li>
+        </ul>
+        <p>弧度制写法：<span>度数 * Math.PI / 180</span></p>
+        <h3>反正切函数的问题</h3>
+        <p>我们可以使用反正切函数Math.atan()来求出两条边之间夹角的度数。</p>
+        <p>但是使用Math.atan()会出现一个度数回应两个不同象限角的问题。不是唯一确定的角。</p>
+        <p>所以这个时候需要用到另一个反正切函数Math.atan2()</p>
+        <h4>反正切函数语法</h4>
+        <p>Math.atan2(y, x)</p>
+        <ul>
+            <li>y：对边的边长，且有正负之分</li>
+            <li>x：邻边的边长，且有正负之分</li>
+        </ul>
+        <p id="text"></p>
+        <p class="tips">注意：我们可以使用反正切函数Math.atan2()求出两条边之间夹角的度数，还能够准确判断该度数对应的是哪一个夹角。</p>
+        <p class="tips">注意：这个函数可以实现追随鼠标指针旋转。</p>
+    </div>
+    <script>
+        window.onload = function () {
+            const text = document.getElementById('text');
+            text.innerHTML = `Math.atan2(1,2)对应角度为:${ Math.atan2(1, 2) * 180 / Math.PI }, Math.atan2(-1, -2)对应角度为:${ Math.atan2(-1, -2) * 180 / Math.PI }`;
+        }
+    </script>
+</body>
+</html>

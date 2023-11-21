@@ -49,8 +49,26 @@ const drawBall = function (cxt, x, y, r = 20, color = '#6699FF') {
     cxt.fill();
 }
 
+// 绘制坐标系
+function drawPostion(cnv) {
+    const cxt = cnv.getContext('2d');
+    const centerX = cnv.width / 2;
+    const centerY = cnv.height / 2;
+    cxt.save();
+    cxt.beginPath();
+    cxt.setLineDash([3, 3]);
+    cxt.moveTo(0, centerY);
+    cxt.lineTo(cnv.width, centerY);
+    cxt.stroke();
+    cxt.moveTo(centerX, 0);
+    cxt.lineTo(centerX, cnv.height);
+    cxt.stroke();
+    cxt.restore();
+}
+
 // 清空画布
-const clearCanvas = function(cnv, cxt) {
+const clearCanvas = function(cnv) {
+    const cxt = cnv.getContext('2d');
     cxt.clearRect(0, 0, cnv.width, cnv.height);
 }
 
