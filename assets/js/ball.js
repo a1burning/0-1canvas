@@ -6,6 +6,9 @@ function Ball (x, y, radius, color) {
 
     this.scaleX = 1;
     this.scaleY = 1;
+
+    this.vx = 1;
+    this.vy = 1;
 }
 
 Ball.prototype = {
@@ -21,12 +24,11 @@ Ball.prototype = {
     },
     fill: function (cxt) {
         cxt.save();
-        // cxt.translate(this.x, this.y);
-        // cxt.rotate(this.rotation);
+        cxt.translate(this.x, this.y);
         cxt.scale(this.scaleX, this.scaleY);
         cxt.fillStyle = this.color;
         cxt.beginPath();
-        cxt.arc(this.x, this.y, this.radius, 0, 360 * Math.PI / 180, false);
+        cxt.arc(0, 0, this.radius, 0, 360 * Math.PI / 180, false);
         cxt.closePath();
         cxt.fill();
         cxt.restore();

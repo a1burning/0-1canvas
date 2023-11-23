@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>14-10重力</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+        p span {
+            color: red;
+        }
+        .mr-10 {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div style="display:flex;text-align: center;">
+        <div class="mr-10">
+            <canvas id="canvas" width="200" style="border: 1px dashed gray;"></canvas>
+            <p>抛物线运动</p>
+        </div>
+        <div class="mr-10">
+            <canvas id="canvas1" width="200" style="border: 1px dashed gray;"></canvas>
+            <p>小球弹起落下到速度为0</p>
+        </div>
+        <div">
+            <canvas id="canvas2" width="200" style="border: 1px dashed gray;"></canvas>
+            <p>前面基础上添加水平速度</p>
+        </div>
+    </div>
+    <h3>重力</h3>
+    <p>重力加速度是加速度中比较特殊的一种。重力加速度其实是物体受地球引力形成的。</p>
+    <p>重力引起的运动可以看做是沿着y轴正方向的加速运动。</p>
+    <h4>语法</h4>
+    <p>vy += gravity</p>
+    <p>y += vy</p>
+    <p class="tips">小球在x轴方向做匀速运动，在y轴方向做减加速运动，运动轨迹就是一条抛物线。</p>
+
+    <script src="../assets/js/tool.js"></script>
+    <script src="../assets/js/ball.js"></script>
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+
+        window.onload = function() {
+            const cnv = $$('canvas');
+            const cxt = cnv.getContext('2d');
+
+            const ball = new Ball(0, cnv.height);
+            let vx = 4;
+            let vy = -5;
+            const gravity = 0.2;
+
+            (function drawFrame() {
+                window.requestAnimationFrame(drawFrame);
+                clearCanvas(cnv);
+
+                ball.x += vx;
+                ball.y += vy;
+                ball.fill(cxt);
+
+                vy += gravity;
+            })();
+
+            const cnv1 = $$('canvas1');
+            const cxt1 = cnv1.getContext('2d');
+
+            const ball1 = new Ball(cnv1.width / 2, 0);
+            let vy1 = 0;
+            const bounce = -0.8;
+
+            (function drawFrame1() {
+                window.requestAnimationFrame(drawFrame1);
+                clearCanvas(cnv1);
+                
+                ball1.y += vy1;
+
+                // 边界检测
+                if (ball1.y > cnv1.height - ball1.radius) {
+                    ball1.y = cnv1.height - ball1.radius;
+                    // 速度反向并且减小
+                    vy1 = vy1 * bounce;
+                }
+                ball1.fill(cxt1);
+
+                vy1 += gravity;
+            })();
+
+            const cnv2 = $$('canvas2');
+            const cxt2 = cnv2.getContext('2d');
+
+            const ball2 = new Ball(0, cnv.height);
+            const vx2 = 3;
+            let vy2 = -6;
+            const bounce1 = -0.75;
+
+            (function drawFrame2() {
+                window.requestAnimationFrame(drawFrame2);
+                clearCanvas(cnv2);
+                
+                ball2.x += vx2;
+                ball2.y += vy2;
+
+                // 边界检测
+                if ((ball2.y + ball2.radius) > cnv2.height) {
+                    ball2.y = cnv2.height - ball2.radius;
+                    // 速度反向并且减小
+                    vy2 = vy2 * bounce;
+                }
+                ball2.fill(cxt2);
+
+                vy2 += gravity;
+            })();
+        }
+    </script>
+</body>
+</html>

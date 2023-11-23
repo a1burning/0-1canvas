@@ -89,11 +89,7 @@
     <div style="display:flex;text-align: center;">
         <div class="mr-10">
             <canvas id="canvas4" width="200" style="border: 1px dashed gray;"></canvas>
-            <p>正弦波形运动</p>
-        </div>
-        <div>
-            <canvas id="canvas5" width="200" style="border: 1px dashed gray;"></canvas>
-            <p>余弦波形运动</p>
+            <p>波形缩放运动</p>
         </div>
     </div>
 
@@ -123,7 +119,7 @@
                 ball.x = centerX + Math.sin(angle) * range;
                 ball.fill(cxt);
 
-                angle += 0.1;
+                angle += 0.05;
             })();
 
             const cnv1 = $$('canvas1');
@@ -144,7 +140,7 @@
                 ball1.x = centerX1 + Math.cos(angle1) * range1;
                 ball1.fill(cxt1);
 
-                angle1 += 0.1;
+                angle1 += 0.05;
             })();
 
             const cnv2 = $$('canvas2');
@@ -166,7 +162,7 @@
                 ball2.y = centerY2 + Math.sin(angle2) * range2;
                 ball2.fill(cxt2);
 
-                angle2 += 0.1;
+                angle2 += 0.05;
             })();
 
             const cnv3 = $$('canvas3');
@@ -188,7 +184,7 @@
                 ball3.y = centerY3 + Math.cos(angle3) * range3;
                 ball3.fill(cxt3);
 
-                angle3 += 0.1;
+                angle3 += 0.05;
             })();
 
             const cnv4 = $$('canvas4');
@@ -201,7 +197,7 @@
             let angle4 = 0;
 
             (function drawFrame4() {
-                window.requestAnimationFrame(drawFrame4, cnv4);
+                window.requestAnimationFrame(drawFrame4);
                 clearCanvas(cnv4);
                 // 绘制坐标系
                 drawPostion(cnv4);
@@ -210,7 +206,7 @@
                 ball4.scaleY = 1 + Math.sin(angle4) * range4;
                 ball4.fill(cxt4);
 
-                angle4 += 0.1;
+                angle4 += 0.05;
             })();
         }
     </script>
