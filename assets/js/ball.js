@@ -33,4 +33,14 @@ Ball.prototype = {
         cxt.fill();
         cxt.restore();
     },
+    // 圆的外接矩形
+    getRect: function () {
+        const rect = {
+            x: this.x - this.radius,
+            y: this.y - this.radius,
+            width: this.radius * 2,
+            height: this.radius * 2
+        };
+        return rect;
+    }
 }

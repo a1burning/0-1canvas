@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>14-07多物体碰撞检测</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+        .command {
+            background: #eee;
+            width: max-content;
+        }
+        p span {
+            color: red;
+        }
+        .mr-10 {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="200" style="border: 1px dashed gray;"></canvas>
+    <p id="text"></p>
+
+    <script src="../assets/js/tool.js"></script>
+    <script src="../assets/js/ball.js"></script>
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+
+        window.onload = function() {
+            const cnv = $$('canvas');
+            const cxt = cnv.getContext('2d');
+
+            const n = 8;
+            const balls = [];
+            for (let i = 0; i < n; i++) {
+                const ball = new Ball();
+                ball.x = Math.random() * cnv.width;
+                ball.y = Math.random() * cnv.height;
+                ball.radius = 10;
+                ball.color = getRandomColor();
+                ball.vx = Math.random() * 6 - 3;
+                ball.vy = Math.random() * 6 - 3;
+                balls.push(ball);
+            }
+
+            // 小球和小球之间的碰撞
+            function checkCollision(ball, i) {
+                for(let j = i + 1; j < balls.length; j++) {
+                    const ball2 = balls[j];
+                    if (checkCircle(ball2, ball)) {
+                        ball.vx = -ball.vx;
+                        ball2.vx = -ball2.vx;
+                        ball.vy = -ball.vy;
+                        ball2.vy = -ball2.vy;
+
+                        // 这里的代码是为了避免出现小球和小球之间的重叠问题，所以这里给了一个偏移量。
+                        if (ball.vx > 0) {
+                            ball.x += 5;
+                        } else {
+                            ball.x -= 5;
+                        }
+                        if (ball.vy > 0) {
+                            ball.y += 5;
+                        } else {
+                            ball.y -= 5;
+                        }
+
+                        if (ball2.vx > 0) {
+                            ball2.x += 5;
+                        } else {
+                            ball2.x -= 5;
+                        }
+
+                        if (ball2.vy > 0) {
+                            ball2.y += 5;
+                        } else {
+                            ball2.y -= 5;
+                        }
+                    }
+                }
+            }
+
+            function drawBall(ball) {
+                ball.fill(cxt);
+                ball.x += ball.vx;
+                ball.y += ball.vy;
+            }
+            
+            (function drawFrame() {
+                window.requestAnimationFrame(drawFrame);
+                clearCanvas(cnv);
+
+                // 碰撞检测
+                balls.forEach(checkCollision);
+                // 边界检测
+                balls.forEach(function(ball) {
+                    BoundaryRebound(cnv, ball);
+                });
+                // 绘制
+                balls.forEach(drawBall);
+            })();
+        }
+    </script>
+</body>
+</html>

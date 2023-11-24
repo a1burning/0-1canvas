@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>14-02外接矩形碰撞检测</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+        .command {
+            background: #eee;
+            width: max-content;
+        }
+        p span {
+            color: red;
+        }
+        .mr-10 {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="200" style="border: 1px dashed gray;"></canvas>
+    <p id="text"></p>
+
+    <script src="../assets/js/tool.js"></script>
+    <script src="../assets/js/ball.js"></script>
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+
+        window.onload = function() {
+            const cnv = $$('canvas');
+            const cxt = cnv.getContext('2d');
+
+            const ballA = new Ball(cnv.width / 2, cnv.height / 2, 30);
+            const rectA = ballA.getRect();
+            const mouse = getMouse(cnv);
+            
+            (function drawFrame() {
+                window.requestAnimationFrame(drawFrame);
+                clearCanvas(cnv);
+                ballA.fill(cxt);
+                cxt.strokeRect(rectA.x, rectA.y, rectA.width, rectA.height);
+
+                const ballB = new Ball(mouse.x, mouse.y, 30);
+                const rectB = ballB.getRect();
+                ballB.fill(cxt);
+                cxt.strokeRect(rectB.x, rectB.y, rectB.width, rectB.height);
+
+                if (checkRect(rectA, rectB)) {
+                    $$('text').innerHTML = '撞上了';
+                } else {
+                    $$('text').innerHTML = '没撞上';
+                }
+            })();
+        }
+    </script>
+</body>
+</html>

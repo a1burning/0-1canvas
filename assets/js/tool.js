@@ -121,6 +121,7 @@ const checkRound = function(cnv, ball) {
     }
 }
 
+// 定义边界检测函数 - 边界生成
 const isBeyondBoundary = function(cnv, ball) {
     return  (ball.x < -ball.radius ||
     ball.x > cnv.width + ball.radius ||
@@ -128,6 +129,7 @@ const isBeyondBoundary = function(cnv, ball) {
     ball.y > cnv.height + ball.radius)
 }
 
+// 定义边界检测函数 - 边界反弹
 const BoundaryRebound = function(cnv, ball) {
     if (ball.x < ball.radius) {
         ball.x = ball.radius;
@@ -157,4 +159,24 @@ const getRandomColor = function() {
 // 获取随机速度的函数  -1 ~ 1
 const getRandomSpeed = function(speed = 1) {
     return (Math.random() * 2 - 1) * speed; // -speed ~ speed中间的数值
+}
+
+// 外接矩形判断碰撞
+const checkRect = (rectA, rectB) => {
+    return  !(rectA.x + rectA.width < rectB.x ||
+    rectA.x > rectB.x + rectB.width ||
+    rectA.y + rectA.height < rectB.y ||
+    rectA.y > rectB.y + rectB.height)
+}
+
+// 外接圆判断碰撞
+const checkCircle = (circleA, circleB) => {
+    const dx = circleA.x - circleB.x;
+    const dy = circleA.y - circleB.y;
+    const distance = Math.sqrt(dx * dx + dy * dy);
+    if (distance < circleA.radius + circleB.radius) {
+        return true;
+    } else {
+        return false;
+    }
 }

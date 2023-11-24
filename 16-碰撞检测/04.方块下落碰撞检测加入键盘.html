@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>14-04方块下落碰撞检测加入键盘</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+        .command {
+            background: #eee;
+            width: max-content;
+        }
+        p span {
+            color: red;
+        }
+        .mr-10 {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="200" style="border: 1px dashed gray;"></canvas>
+    <p id="text"></p>
+
+    <script src="../assets/js/tool.js"></script>
+    <script src="../assets/js/box.js"></script>
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+        
+        window.onload = function() {
+            const cnv = $$('canvas');
+            const cxt = cnv.getContext('2d');
+
+            const boxs = [];
+            let activeBox = createBox();
+            const vy = 0.5;
+            const key = getKey();
+            window.addEventListener('keydown', function() {
+                switch(key.direction) {
+                    case 'down':
+                        activeBox.y += 5;
+                        break;
+                    case 'left':
+                        activeBox.x -= 10;
+                        break;
+                    case 'right':
+                        activeBox.x += 10;
+                        break;
+                }
+            }, false)
+            function createBox () {
+                const x = Math.random() * cnv.width;
+                const y = 0;
+                const width = Math.random() * 40 + 10;
+                const height = Math.random() * 40 + 10;
+                const color = getRandomColor();
+                const box = new Box(x, y, width, height, color);
+                boxs.push(box);
+                return box;
+            }
+            
+            (function drawFrame() {
+                window.requestAnimationFrame(drawFrame);
+                clearCanvas(cnv);
+                activeBox.y += vy;
+
+                // 判断有没有碰撞边界
+                if (activeBox.y > cnv.height - activeBox.height) {
+                    activeBox.y = cnv.height - activeBox.height;
+                    activeBox = createBox();
+                }
+                
+                // 判断有没有互相碰撞
+                boxs.forEach((box) => {
+                    if (activeBox !== box && checkRect(activeBox, box)) {
+                        activeBox.y = box.y - activeBox.height;
+                        activeBox = createBox();
+                    }
+                    box.fill(cxt);
+                })
+            })();
+        }
+    </script>
+</body>
+</html>

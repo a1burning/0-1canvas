@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>14-01碰撞检测简介</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+        p span {
+            color: red;
+        }
+        .mr-10 {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h3>碰撞检测</h3>
+        <p>边界检测是检测边界和物体之间的碰撞，碰撞检测是检测物体和物体之间的碰撞。</p>
+        <p>碰撞检测常用的方法有下面两种</p>
+        <ul>
+            <li>外接矩形判定法</li>
+            <li>外接圆判定法</li>
+        </ul>
+        <h3>外接矩形判定法</h3>
+        <p>外接矩形判定法，指的是如果检测物体是一个矩形或者近似矩形，我们可以把物体抽象成一个矩形，然后用判断两个矩形是否碰撞的方法进行检测。</p>
+        <h4>判定法步骤：</h4>
+        <ol>
+            <li>找到物体的外接矩形</li>
+            <li>对外接矩形进行碰撞检测</li>
+        </ol>
+        <h4>如何找到物体的外接矩形：</h4>
+        <p class="tips">矩形的上边穿过物体最顶端的像素，下面穿过最底端，左边穿过最左边，右边穿过最右边。</p>
+        <h4>语法</h4>
+        <pre>
+const checkRect = (rectA, rectB) => {
+    return  !(rectA.x + rectA.width < rectB.x ||
+    rectA.x > rectB.x + rectB.width ||
+    rectA.y + rectA.height < rectB.y ||
+    rectA.y > rectB.y + rectB.height)
+}
+        </pre>
+        <h3>外接圆判定法</h3>
+        <p>外接矩形判定法，指的是如果检测物体是一个圆或者近似圆形，我们可以把物体抽象成一个圆，然后用判断两个圆形是否碰撞的方法进行检测。</p>
+        <h4>判定法步骤：</h4>
+        <ol>
+            <li>找到物体的外接圆</li>
+            <li>对外接圆进行碰撞检测</li>
+        </ol>
+        <h4>如何判断两个圆是否发生碰撞：</h4>
+        <p class="tips">两个圆心之间的距离大于或等于两个圆的半径之和，则没有发生碰撞</p>
+        <p class="tips">两个圆心之间的距离小于两个圆的半径之和，则发生了碰撞</p>
+    </div>
+</body>
+</html>
