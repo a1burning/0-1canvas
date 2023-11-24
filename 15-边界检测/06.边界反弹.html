@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>14-06边界反弹</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+        .command {
+            background: #eee;
+            width: max-content;
+        }
+        p span {
+            color: red;
+        }
+        .mr-10 {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="200" style="border: 1px dashed gray;"></canvas>
+    
+    <h3>边界反弹</h3>
+    <p>指的是物体触碰到边界之后就会反弹回来。</p>
+    <p>我们需要对物体进行边界检测，然后保持它的位置不变，改变它的速度向量。</p>
+    <h3>语法</h3>
+    <ul>
+        <li>碰到左边界或者右边界：vx（x方向速度）去反，vy不变</li>
+        <li>碰到上边界或者下边界：vy（y方向速度）去反，vx不变</li>
+    </ul>
+
+    <script src="../assets/js/tool.js"></script>
+    <script src="../assets/js/ball.js"></script>
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+
+        window.onload = function() {
+            const cnv = $$('canvas');
+            const cxt = cnv.getContext('2d');
+            
+            // 定义一个存放小球的ball
+            const beginX = cnv.width / 2;
+            const beginY = cnv.height / 2;
+            const ball = new Ball(beginX, beginY);
+            ball.vx = getRandomSpeed(3);
+            ball.vy = getRandomSpeed(3);
+
+            (function drawFrame() {
+                window.requestAnimationFrame(drawFrame);
+                clearCanvas(cnv);
+
+                ball.x += ball.vx;
+                ball.y += ball.vy;
+                // 检测边界
+                BoundaryRebound(cnv, ball);
+                // 绘制小球
+                ball.fill(cxt);
+            })();
+        }
+    </script>
+</body>
+</html>

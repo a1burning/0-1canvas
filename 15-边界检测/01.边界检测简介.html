@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>14-01边界检测简介</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+        p span {
+            color: red;
+        }
+        .mr-10 {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h3>边界检测</h3>
+        <p>指的是检测一个物体所处“运动环境的范围”，即边界。在canvas中，这个边界可以是整个画布，也可以是画布的一部分。</p>
+        <p>小球坐标x，y</p>
+        <ul>
+            <li>左边界判断：ball.x < ball.radius</li>
+            <li>右边界判断：ball.x > cnv.width - ball.radius</li>
+            <li>上边界判断：ball.y < ball.radius</li>
+            <li>下边界判断：ball.y > cnv.height - ball.radius</li>
+        </ul>
+        <h3>边界检测可以有下面4个方面</h3>
+        <ul>
+            <li>边界限制</li>
+            <li>边界环绕</li>
+            <li>边界生成</li>
+            <li>边界反弹</li>
+        </ul>
+    </div>
+</body>
+</html>

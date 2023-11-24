@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>14-04边界生成</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+        .command {
+            background: #eee;
+            width: max-content;
+        }
+        p span {
+            color: red;
+        }
+        .mr-10 {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="200" style="border: 1px dashed gray;"></canvas>
+    
+    <h3>边界生成</h3>
+    <p>指的是物体完全超出边界之后，会在最开始的位置重新生成。</p>
+    <p>这种效果非常实用，可用于创建喷泉效果以及各种粒子特效。也不用担心canvas上的物体过多影响浏览器性能，因为物体的数量是固定不变的。</p>
+    <h3>语法</h3>
+    <p class="command">if (ball.x < -ball.radius ||</p>
+    <p class="command">ball.x > cnv.width + ball.radius ||</p>
+    <p class="command">ball.y < -ball.radius ||</p>
+    <p class="command">ball.y > cnv.height + ball.radius)</p>
+    <p class="tips">任何一种情况为true的时候，都代表小球已经超出边界外。</p>
+
+    <script src="../assets/js/tool.js"></script>
+    <script src="../assets/js/ball.js"></script>
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+
+        window.onload = function() {
+            const cnv = $$('canvas');
+            const cxt = cnv.getContext('2d');
+
+            // 定义一个存放小球的ball
+            const balls = [];
+            const len = 50;
+            const beginX = cnv.width / 2;
+            const beginY = cnv.height / 2;
+            for (let i = 0; i < len; i++) {
+                const ball = new Ball(beginX, beginY, 5, getRandomColor());
+                ball.vx = getRandomSpeed();
+                ball.vy = getRandomSpeed();
+                balls.push(ball);
+            }
+
+            (function drawFrame() {
+                window.requestAnimationFrame(drawFrame);
+                clearCanvas(cnv);
+
+                balls.forEach(function(ball) {
+                    if (isBeyondBoundary(cnv, ball)) {
+                        ball.x = beginX;
+                        ball.y = beginY;
+                        ball.vx = getRandomSpeed();
+                        ball.vy = getRandomSpeed();
+                    }
+                    ball.fill(cxt);
+
+                    ball.x += ball.vx;
+                    ball.y += ball.vy;
+                })
+            })();
+        }
+    </script>
+</body>
+</html>

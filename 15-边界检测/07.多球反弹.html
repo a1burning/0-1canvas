@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>14-07多球反弹</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+        .command {
+            background: #eee;
+            width: max-content;
+        }
+        p span {
+            color: red;
+        }
+        .mr-10 {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="200" style="border: 1px dashed gray;"></canvas>
+
+    <script src="../assets/js/tool.js"></script>
+    <script src="../assets/js/ball.js"></script>
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+
+        window.onload = function() {
+            const cnv = $$('canvas');
+            const cxt = cnv.getContext('2d');
+
+            // 定义一个存放小球的数组
+            const balls = [];
+            const n = 10;
+            const beginX = cnv.width / 2;
+            const beginY = cnv.height / 2;
+            for (let i = 0; i < n; i++) {
+                // 定义一个存放小球的ball
+                const ball = new Ball(beginX, beginY, 8, getRandomColor());
+                ball.vx = getRandomSpeed(3);
+                ball.vy = getRandomSpeed(3);
+                balls.push(ball);
+            }
+
+            (function drawFrame() {
+                window.requestAnimationFrame(drawFrame);
+                clearCanvas(cnv);
+                balls.forEach((ball) => {
+                    ball.x += ball.vx;
+                    ball.y += ball.vy;
+                    // 检测边界
+                    BoundaryRebound(cnv, ball);
+                    // 绘制小球
+                    ball.fill(cxt);
+                })
+            })();
+        }
+    </script>
+</body>
+</html>

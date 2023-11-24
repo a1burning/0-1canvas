@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>14-03边界环绕</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+        .command {
+            background: #eee;
+            width: max-content;
+        }
+        p span {
+            color: red;
+        }
+        .mr-10 {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="200" style="border: 1px dashed gray;"></canvas>
+    <div>
+        <canvas id="canvas1" width="200" style="border: 1px dashed gray;"></canvas>
+        <p>请使用ASWD或者上下左右键盘控制小球运动。</p>
+    </div>
+    <h3>边界环绕</h3>
+    <p>指的是当物体从一个边界消失后，它就会从对面的边界重新出现，从而形成一种环绕效果。</p>
+    <p>如果物体从左边界消失，就会从右边界出现。如果物体从下边界消失，然后就会从上边界出现</p>
+    <h3>语法</h3>
+    <ul>
+        <li>完全超出左边界判断：<span class="command">ball.x < -ball.radius</span></li>
+        <li>完全超出右边界判断：<span class="command">ball.x > cnv.width + ball.radius</span></li>
+        <li>完全超出上边界判断：<span class="command">ball.y < -ball.radius</span></li>
+        <li>完全超出下边界判断：<span class="command">ball.y > cnv.height + ball.radius</span></li>
+    </ul>
+
+    <script src="../assets/js/tool.js"></script>
+    <script src="../assets/js/ball.js"></script>
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+
+        window.onload = function() {
+            const cnv = $$('canvas');
+            const cxt = cnv.getContext('2d');
+
+            const ball = new Ball(0, cnv.height / 2);
+            const vx = 2;
+
+            (function drawFrame() {
+                window.requestAnimationFrame(drawFrame);
+                clearCanvas(cnv);
+
+                ball.x += vx;
+                if (ball.x > cnv.width + ball.radius) {
+                    ball.x = -ball.radius;
+                }
+                ball.fill(cxt);
+            })();
+
+            const cnv1 = $$('canvas1');
+            const cxt1 = cnv1.getContext('2d');
+
+            const ball1 = new Ball(cnv.width / 2, cnv.height / 2);
+            ball1.fill(cxt1);
+            const distance = 10;
+            const key1 = getKey();
+
+            window.addEventListener('keydown', function (e) {
+                clearCanvas(cnv1);
+                switch(key1.direction) {
+                    case 'up':
+                        ball1.y -= distance;
+                        checkRound(cnv1, ball1);
+                        ball1.fill(cxt1);
+                        break;
+                    case 'down':
+                        ball1.y += distance;
+                        checkRound(cnv1, ball1);
+                        ball1.fill(cxt1);
+                        break;
+                    case 'left':
+                        ball1.x -= distance;
+                        checkRound(cnv1, ball1);
+                        ball1.fill(cxt1);
+                        break;
+                    case 'right':
+                        ball1.x += distance;
+                        checkRound(cnv1, ball1);
+                        ball1.fill(cxt1);
+                        break;
+                    default:
+                }
+            }, false);
+        }
+    </script>
+</body>
+</html>
