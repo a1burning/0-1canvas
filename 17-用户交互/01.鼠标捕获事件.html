@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>17-01鼠标捕获事件</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+        .command {
+            background: #eee;
+            width: max-content;
+        }
+        p span {
+            color: red;
+        }
+        .mr-10 {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h3>canvas用户交互事件-鼠标事件</h3>
+    <ul>
+        <li>捕获物体</li>
+        <li>拖拽物体</li>
+        <li>抛掷物体</li>
+    </ul>
+    <h3>捕获物体</h3>
+    <p>canvas中对图形的捕获，和DOM元素的捕获是不一样的。</p>
+    <ul>
+        <li>矩形捕获: 鼠标点击的点落在矩形上</li>
+        <li>圆形捕获: 鼠标点击的点距离圆形小于圆的半径</li>
+        <li>多边形捕获和不规则图形捕获: 分离轴定理(SAT)和最小平移向量(MTV)</li>
+    </ul>
+    <h4>矩形的捕获语法</h4>
+    <pre>
+if (mouse.x > rect.x &&
+    mouse.x < rect.x + rect.width &&
+    mouse.y > rect.y &&
+    mouse.y < rect.y + rect.height) {
+    ...
+}
+    </pre>
+    <h4>圆形的捕获语法</h4>
+    <pre>
+dx = mouse.x - circle.x;
+dy = mouse.y - circle.y;
+distance = Math.sqrt(dx * dx + dy * dy);
+if (distance < circle.radius) {
+    ...
+}
+    </pre>
+</body>
+</html>

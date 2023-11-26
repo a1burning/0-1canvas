@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>17-04鼠标拖拽事件</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+        .command {
+            background: #eee;
+            width: max-content;
+        }
+        p span {
+            color: red;
+        }
+        .mr-10 {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="200" style="border: 1px dashed gray;"></canvas>
+    <p id="text"></p>
+    <h3>拖拽物体</h3>
+    <p>canvas中想要实现拖拽功能，需要以下三步</p>
+    <ol>
+        <li>捕获物体：按下鼠标的时候，判断鼠标指针的坐标是否落在物体上，如果是就添加mouseup和mousemove两个事件。</li>
+        <li>移动物体：在鼠标移动的事件中，更新物体坐标为鼠标指针的坐标。</li>
+        <li>松开物体：在松开物体时，移出mouseup事件和mousemove事件</li>
+    </ol>
+    <h4>拖拽语法</h4>
+    <pre>
+cnv.addEventListener("mousedown", function (e) {
+    cnv.addEventListener("mousemove", onMousemove, false);
+    cnv.addEventListener("mouseup", onMouseup, false);
+}, false)
+    </pre>
+
+    <script src="../assets/js/tool.js"></script>
+    <script src="../assets/js/ball.js"></script>
+    <script type="text/javascript">
+        
+        function $$(id) {
+            return document.getElementById(id);
+        }
+        window.onload = function () {
+            const cnv = $$("canvas");
+            const text = $$("text");
+            const cxt = cnv.getContext("2d");
+
+            const ball = new Ball(cnv.width / 2, cnv.height / 2, 20);
+            ball.fill(cxt);
+            const mouse = getMouse(cnv);
+            // 初始化两个变量，dx和dy，
+            let dx = 0;
+            let dy = 0;
+
+            function onMousemove(e) {
+                ball.x = mouse.x - dx;
+                ball.y = mouse.y - dy;
+                // 加入边界限制
+                checkBorder(cnv, ball);
+            }
+
+            function onMouseup(e) {
+                cnv.removeEventListener("mousemove", onMousemove, false);
+                cnv.removeEventListener("mouseup", onMouseup, false);
+            }
+
+            cnv.addEventListener("mousedown", function () {
+                if (ball.checkMouse(mouse)) {
+                    // dx是鼠标指针与球心的水平偏移量
+                    dx = mouse.x - ball.x;
+                    // dy是鼠标指针与球心的垂直偏移量
+                    dy = mouse.y - ball.y;
+                    cnv.addEventListener("mousemove", onMousemove, false);
+                    cnv.addEventListener("mouseup", onMouseup, false);
+                }
+            }, false);
+
+            (function drawFrame() {
+                window.requestAnimationFrame(drawFrame);
+                clearCanvas(cnv);
+
+                ball.fill(cxt);
+            })();
+        }
+    </script>
+</body>
+</html>

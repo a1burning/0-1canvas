@@ -42,5 +42,16 @@ Ball.prototype = {
             height: this.radius * 2
         };
         return rect;
+    },
+    // 点击检测是否捕获了小球
+    checkMouse: function(mouse) {
+        const dx = mouse.x - this.x;
+        const dy = mouse.y - this.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        if (distance < this.radius) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

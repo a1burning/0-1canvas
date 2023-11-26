@@ -147,6 +147,24 @@ const BoundaryRebound = function(cnv, ball) {
     }
 }
 
+// 定义边界检测函数 - 边界反弹加入反弹损耗
+const BoundaryRebound1 = function(cnv, ball, bounce) {
+    if (ball.x < ball.radius) {
+        ball.x = ball.radius;
+        ball.vx = -ball.vx * bounce;
+    } else if (ball.x > cnv.width - ball.radius) {
+        ball.x = cnv.width - ball.radius;
+        ball.vx = -ball.vx * bounce;
+    }
+    if (ball.y < ball.radius) {
+        ball.y = ball.radius;
+        ball.vy = -ball.vy * bounce;
+    } else if (ball.y > cnv.height - ball.radius) {
+        ball.y = cnv.height - ball.radius;
+        ball.vy = -ball.vy * bounce;
+    }
+}
+
 // 获取随机颜色的函数
 const getRandomColor = function() {
     return '#' + 

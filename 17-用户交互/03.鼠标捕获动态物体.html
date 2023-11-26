@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>16-05外接圆碰撞检测</title>
+    <title>17-03鼠标捕获动态物体</title>
     <style>
         .tips {
             color: #999;
@@ -28,30 +28,41 @@
     <script src="../assets/js/tool.js"></script>
     <script src="../assets/js/ball.js"></script>
     <script type="text/javascript">
+        
         function $$(id) {
             return document.getElementById(id);
         }
+        window.onload = function () {
+            const cnv = $$("canvas");
+            const text = $$("text");
+            const cxt = cnv.getContext("2d");
 
-        window.onload = function() {
-            const cnv = $$('canvas');
-            const cxt = cnv.getContext('2d');
-
-            const ballA = new Ball(cnv.width / 2, cnv.height / 2, 20, '#ff6699');
+            const ball = new Ball(0, cnv.height / 2, 20);
             const mouse = getMouse(cnv);
-            
+            //isMouseDown用于标识鼠标是否按下的状态
+            let isMouseDown = false;
+            const vx = 1;
+
+            cnv.addEventListener("mousedown", function () {
+                //判断鼠标点击坐标是否位于小球上，如果是，则isMouseDown为true
+                if (ball.checkMouse(mouse)) {
+                    isMouseDown = true;
+                    text.innerHTML = "鼠标点击了小球";
+                }
+            }, false);
+
             (function drawFrame() {
                 window.requestAnimationFrame(drawFrame);
                 clearCanvas(cnv);
 
-                const ballB = new Ball(mouse.x, mouse.y, 20, '#66ccff');
-                if (checkCircle(ballA, ballB)) {
-                    $$('text').innerHTML = '撞上了';
-                } else {
-                    $$('text').innerHTML = '没撞上';
+                //如果鼠标不是按下状态，则小球继续运动，否则就会停止
+                if (!isMouseDown) {
+                    ball.x += vx;
                 }
 
-                ballA.fill(cxt);
-                ballB.fill(cxt);
+                checkRound(cnv, ball);
+
+                ball.fill(cxt);
             })();
         }
     </script>

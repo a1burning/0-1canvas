@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>17-05鼠标抛掷事件</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+        .command {
+            background: #eee;
+            width: max-content;
+        }
+        p span {
+            color: red;
+        }
+        .mr-10 {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="200" style="border: 1px dashed gray;"></canvas>
+    <p id="text"></p>
+    <h3>抛掷物体</h3>
+    <p>用鼠标选中一个物体，拖拽着向某个方向移动，松开鼠标后物体会沿着拖拽方向继续前进。</p>
+    <p>抛掷物体的时候，必须先计算物体的速度向量，并且在释放物体时将这个速度向量赋给物体。</p>
+    <p>在拖拽物体时，物体每一帧中拥有一个新的位置：用新坐标-旧坐标就能得到每一帧物体的移动速度。</p>
+    <h4>语法</h4>
+    <pre>
+vx = ball.x - oldX;
+vy = ball.y - oldY;
+    </pre>
+
+    <script src="../assets/js/tool.js"></script>
+    <script src="../assets/js/ball.js"></script>
+    <script type="text/javascript">
+        
+        function $$(id) {
+            return document.getElementById(id);
+        }
+        window.onload = function () {
+            const cnv = $$("canvas");
+            const text = $$("text");
+            const cxt = cnv.getContext("2d");
+
+            const ball = new Ball(cnv.width / 2, cnv.height / 2, 20);
+            ball.vx = 0;
+            ball.vy = 0;
+            ball.fill(cxt);
+            const mouse = getMouse(cnv);
+            
+            let isMouseDown = false;
+            // 初始化两个变量，dx和dy，
+            let dx = 0;
+            let dy = 0;
+            let oldX = 0;
+            let oldY = 0;
+
+            function onMousemove(e) {
+                ball.x = mouse.x - dx;
+                ball.y = mouse.y - dy;
+                // 加入边界限制
+                checkBorder(cnv, ball);
+            }
+
+            function onMouseup(e) {
+                isMouseDown = false;
+                cnv.removeEventListener("mousemove", onMousemove, false);
+                cnv.removeEventListener("mouseup", onMouseup, false);
+            }
+
+            cnv.addEventListener("mousedown", function () {
+                if (ball.checkMouse(mouse)) {
+                    isMouseDown = true;
+                    oldX = ball.x;
+                    oldY = ball.y;
+                    // dx是鼠标指针与球心的水平偏移量
+                    dx = mouse.x - ball.x;
+                    // dy是鼠标指针与球心的垂直偏移量
+                    dy = mouse.y - ball.y;
+                    cnv.addEventListener("mousemove", onMousemove, false);
+                    cnv.addEventListener("mouseup", onMouseup, false);
+                }
+            }, false);
+
+            (function drawFrame() {
+                window.requestAnimationFrame(drawFrame);
+                clearCanvas(cnv);
+
+                if (isMouseDown) {
+                    ball.vx = ball.x - oldX;
+                    ball.vy = ball.y - oldY;
+                    oldX = ball.x;
+                    oldY = ball.y;
+                } else {
+                    ball.x += ball.vx;
+                    ball.y += ball.vy;
+                    // 检测边界
+                    BoundaryRebound(cnv, ball);
+                }
+
+                ball.fill(cxt);
+            })();
+        }
+    </script>
+</body>
+</html>

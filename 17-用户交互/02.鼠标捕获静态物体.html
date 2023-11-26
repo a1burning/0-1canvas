@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>16-05外接圆碰撞检测</title>
+    <title>17-02鼠标捕获静态物体</title>
     <style>
         .tips {
             color: #999;
@@ -35,24 +35,19 @@
         window.onload = function() {
             const cnv = $$('canvas');
             const cxt = cnv.getContext('2d');
+            const text = $$('text');
 
-            const ballA = new Ball(cnv.width / 2, cnv.height / 2, 20, '#ff6699');
+            const ball = new Ball(cnv.width / 2, cnv.height / 2, 30);
+            ball.fill(cxt);
             const mouse = getMouse(cnv);
             
-            (function drawFrame() {
-                window.requestAnimationFrame(drawFrame);
-                clearCanvas(cnv);
-
-                const ballB = new Ball(mouse.x, mouse.y, 20, '#66ccff');
-                if (checkCircle(ballA, ballB)) {
-                    $$('text').innerHTML = '撞上了';
+            cnv.addEventListener('mousemove', function () {
+                if (ball.checkMouse(mouse)) {
+                    text.innerHTML = `鼠标指针被移入小球`;
                 } else {
-                    $$('text').innerHTML = '没撞上';
+                    text.innerHTML = `鼠标指针被移出小球`;
                 }
-
-                ballA.fill(cxt);
-                ballB.fill(cxt);
-            })();
+            }, false)
         }
     </script>
 </body>
