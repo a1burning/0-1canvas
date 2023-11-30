@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>18-07弹性动画</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+        .command {
+            background: #eee;
+            width: max-content;
+        }
+        p span {
+            color: red;
+        }
+        .mr-10 {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="200" style="border: 1px dashed gray;"></canvas>
+    <canvas id="canvas1" width="200" style="border: 1px dashed gray;"></canvas>
+    <h3>弹性动画</h3>
+    <p>弹性动画和缓动动画相似的点都是把一个物体从一个位置移动到另一个位置的动画效果，不同的是缓动动画中，这个物体到终点就停下来了，而弹性动画需要在终点后反弹一会儿，直到停止。</p>
+    <h4>弹性动画和缓动动画的3个共同点</h4>
+    <ol>
+        <li>需要设置一个终点</li>
+        <li>需要确定物体到终点的距离</li>
+        <li>运动和距离成正比</li>
+    </ol>
+    <h4>弹性动画和缓动动画的区别</h4>
+    <ul>
+        <li>缓动动画：跟距离成正比的是速度。</li>
+        <li>弹性动画：跟距离成正比的是加速度。</li>
+    </ul>
+    
+    <h4>语法</h4>
+    <pre>
+ax = (targetX - x) * spring;
+ay = (targetY - y) * spring;
+vx += ax;
+vy += ay;
+vx *= friction;
+vy *= friction;
+x += vx;
+y += vy;
+    </pre>
+
+    <script src="../assets/js/tool.js"></script>
+    <script src="../assets/js/ball.js"></script>
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+
+        window.onload = function() {
+            const cnv = $$('canvas');
+            const cxt = cnv.getContext('2d');
+
+            const ball = new Ball(0, cnv.height / 2);
+            const targetX = cnv.width / 2;
+            const spring = 0.02;
+            const friction = 0.95;
+            ball.vx = 0;
+            
+            (function frame() {
+                window.requestAnimationFrame(frame);
+                clearCanvas(cnv);
+                const ax = (targetX - ball.x) * spring;
+                ball.vx += ax;
+                ball.vx *= friction;
+                ball.x += ball.vx;
+                ball.fill(cxt);
+            })()
+
+            const cnv1 = $$('canvas1');
+            const cxt1 = cnv1.getContext('2d');
+
+            const ball1 = new Ball(cnv1.width / 2, cnv1.height / 2);
+            const mouse = getMouse(cnv1);
+            const targetX1 = cnv1.width / 2;
+            ball1.vx = 0;
+            ball1.vy = 0;
+            
+            (function frame1() {
+                window.requestAnimationFrame(frame1);
+                clearCanvas(cnv1);
+                const ax = (mouse.x - ball1.x) * spring;
+                const ay = (mouse.y - ball1.y) * spring;
+                ball1.vx += ax;
+                ball1.vy += ay;
+                ball1.vx *= friction;
+                ball1.vy *= friction;
+                ball1.x += ball1.vx;
+                ball1.y += ball1.vy;
+                ball1.fill(cxt1);
+            })()
+        }
+    </script>
+</body>
+</html>

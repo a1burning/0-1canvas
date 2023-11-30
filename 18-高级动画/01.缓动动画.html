@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>18-01缓动动画</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+        .command {
+            background: #eee;
+            width: max-content;
+        }
+        p span {
+            color: red;
+        }
+        .mr-10 {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="200" style="border: 1px dashed gray;"></canvas>
+    <canvas id="canvas1" width="200" style="border: 1px dashed gray;"></canvas>
+    <h3>缓动动画</h3>
+    <p>指的是带有一定缓冲效果的动画，物体在某一段时间会渐进加速或者渐进减速，从而让物体的运动看起来更为自然逼真。</p>
+    <p class="tips">每一帧的速度都乘以缓动系数，从而求出当前速度。随着距离不断减小，速度也就不断降低。</p>
+    <p class="tips">缓动系数是一个0-1之间的数，越接近1小球移动的越快，越接近0小球移动的越慢。不过也不建议把缓动系数设置的太小。</p>
+    <h4>缓动动画的种类</h4>
+    <ul>
+        <li>缓入动画</li>
+        <li>缓出动画</li>
+    </ul>
+    <h4>实现缓入动画需要以下5步骤</h4>
+    <ol>
+        <li>定义一个0~1的缓动系数easing</li>
+        <li>计算出物体与终点之间的距离</li>
+        <li>计算出当前的速度，其中当前速度 = 距离 * 缓动系数</li>
+        <li>计算新的位置，其中新的位置 = 当前位置 + 当前速度</li>
+        <li>重复执行2-4步，直到物体达到目标</li>
+    </ol>
+    <h4>缓动动画和摩擦力的区别</h4>
+    <p>摩擦力的速度降低与距离无关，是固定的比例；缓动动画的速度降低与距离有关，并不是固定的比例。</p>
+    <h4>语法</h4>
+    <pre>
+const targetX = 任意位置;
+const targetY = 任意位置;
+const vx = (targetX - x) * easing;
+const vy = (targetY - y) * easing;
+    </pre>
+    <ul>
+        <li>targetX,targetY：目标的横纵坐标</li>
+        <li>easing：缓动系数</li>
+        <li>vx,vy：物体在x轴方向和y轴方向速度</li>
+    </ul>
+
+    <script src="../assets/js/tool.js"></script>
+    <script src="../assets/js/ball.js"></script>
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+
+        window.onload = function() {
+            const cnv = $$('canvas');
+            const cxt = cnv.getContext('2d');
+
+            const ball = new Ball(0, cnv.height / 2);
+            const targetX = cnv.width * (3 / 4);
+            const easing = 0.05;
+            
+            (function frame() {
+                window.requestAnimationFrame(frame);
+                clearCanvas(cnv);
+                ball.vx = (targetX - ball.x) * easing
+                ball.x += ball.vx;
+                ball.fill(cxt);
+            })()
+
+            const cnv1 = $$('canvas1');
+            const cxt1 = cnv1.getContext('2d');
+
+            const ball1 = new Ball(0, 0);
+            const targetX1 = cnv1.width * (3 / 4);
+            const targetY1 = cnv1.height * (1 / 2);
+            
+            (function frame1() {
+                window.requestAnimationFrame(frame1);
+                clearCanvas(cnv1);
+                ball1.vx = (targetX1 - ball1.x) * easing;
+                ball1.vy = (targetY1 - ball1.y) * easing;
+                ball1.x += ball1.vx;
+                ball1.y += ball1.vy;
+                ball1.fill(cxt1);
+            })()
+        }
+    </script>
+</body>
+</html>

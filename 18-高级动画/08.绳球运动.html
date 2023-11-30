@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>18-08绳球运动</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+        .command {
+            background: #eee;
+            width: max-content;
+        }
+        p span {
+            color: red;
+        }
+        .mr-10 {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="200" style="border: 1px dashed gray;"></canvas>
+
+    <h3>绳球运动</h3>
+    <p>所谓绳球运动，指的是弹性小球的一端绑着一个小球，通过甩动绳子，小球在力的作用下来回弹动。</p>
+
+    <script src="../assets/js/tool.js"></script>
+    <script src="../assets/js/ball.js"></script>
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+
+        window.onload = function() {
+            const cnv = $$('canvas');
+            const cxt = cnv.getContext('2d');
+
+            const ball = new Ball(cnv.width / 2, cnv.height / 2);
+            const mouse = getMouse(cnv);
+
+            const targetX = cnv.width / 2;
+            const spring = 0.02;
+            const friction = 0.95;
+            ball.vx = 0;
+            ball.vy = 0;
+            
+            (function frame() {
+                window.requestAnimationFrame(frame);
+                clearCanvas(cnv);
+                const ax = (mouse.x - ball.x) * spring;
+                const ay = (mouse.y - ball.y) * spring;
+                ball.vx += ax;
+                ball.vy += ay;
+                ball.vx *= friction;
+                ball.vy *= friction;
+                ball.x += ball.vx;
+                ball.y += ball.vy;
+                ball.fill(cxt);
+
+                cxt.beginPath();
+                cxt.moveTo(ball.x, ball.y);
+                cxt.lineTo(mouse.x, mouse.y);
+                cxt.stroke();
+                cxt.closePath();
+            })()
+        }
+    </script>
+</body>
+</html>

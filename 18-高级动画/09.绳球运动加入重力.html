@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>18-08绳球运动加入重力</title>
+    <style>
+        .tips {
+            color: #999;
+        }
+        .command {
+            background: #eee;
+            width: max-content;
+        }
+        p span {
+            color: red;
+        }
+        .mr-10 {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="200" style="border: 1px dashed gray;"></canvas>
+
+    <script src="../assets/js/tool.js"></script>
+    <script src="../assets/js/ball.js"></script>
+    <script type="text/javascript">
+        function $$(id) {
+            return document.getElementById(id);
+        }
+
+        window.onload = function() {
+            const cnv = $$('canvas');
+            const cxt = cnv.getContext('2d');
+
+            const ball = new Ball(cnv.width / 2, cnv.height / 2);
+            const mouse = getMouse(cnv);
+
+            const targetX = cnv.width / 2;
+            const spring = 0.02;
+            const friction = 0.95;
+            const gravity = 1;
+            ball.vx = 0;
+            ball.vy = 0;
+            
+            (function frame() {
+                window.requestAnimationFrame(frame);
+                clearCanvas(cnv);
+                const ax = (mouse.x - ball.x) * spring;
+                const ay = (mouse.y - ball.y) * spring;
+                ball.vx += ax;
+                ball.vy += ay;
+                // 加入重力
+                ball.vy += gravity;
+                ball.vx *= friction;
+                ball.vy *= friction;
+                ball.x += ball.vx;
+                ball.y += ball.vy;
+                ball.fill(cxt);
+
+                cxt.beginPath();
+                cxt.moveTo(ball.x, ball.y);
+                cxt.lineTo(mouse.x, mouse.y);
+                cxt.stroke();
+                cxt.closePath();
+            })()
+        }
+    </script>
+</body>
+</html>
