@@ -49,6 +49,7 @@
             return document.getElementById(id);
         }
 
+        // 用arcTo实现
         function createRoundedRect(cxt, width, height, r, offsetX, offsetY) {
             cxt.beginPath()
             cxt.moveTo(offsetX + r, offsetY)
@@ -63,13 +64,30 @@
             cxt.closePath()
         }
 
+        // 用arc实现
+        function createRoundedRect(cxt, width, height, r, offsetX, offsetY) {
+            cxt.beginPath()
+            cxt.moveTo(offsetX + r, offsetY)
+            cxt.lineTo(offsetX + width - r, offsetY)
+            cxt.arc(offsetX + width - r, offsetY + r, r, -90 * Math.PI / 180, 0)
+            cxt.lineTo(offsetX + width, offsetY + height - r)
+            cxt.arc(offsetX + width - r, offsetY + height - r, r, 0, 90 * Math.PI / 180)
+            cxt.lineTo(offsetX + r, offsetY + height)
+            cxt.arc(offsetX + r, offsetY + height - r, r, 90 * Math.PI / 180, 180 * Math.PI / 180)
+            cxt.lineTo(offsetX, offsetY + r)
+            cxt.arc(offsetX + r, offsetY + r, r, 180 * Math.PI / 180, 270 * Math.PI / 180)
+            cxt.closePath()
+        }
+
         window.onload = function() {
             const cnv = $$('canvas');
             const cxt = cnv.getContext('2d');
             // 绘制圆角矩形
             createRoundedRect(cxt, 100, 100, 20, 20, 20)
-            cxt.fillStyle = 'hotPink'
-            cxt.fill()
+            // cxt.fillStyle = 'hotPink'
+            // cxt.fill()
+            cxt.strokeStyle = 'hotPink'
+            cxt.stroke()
         }
     </script>
 </body>
